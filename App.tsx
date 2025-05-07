@@ -1,13 +1,21 @@
+// LIB
 import React from 'react';
-import { StatusBar } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import {StatusBar} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+
+// IMPORT
+import {navigationRef} from './src/navigation/navigationService';
+import Navigate from './src/navigation/navigate';
 
 function App(): React.JSX.Element {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar translucent={true} backgroundColor={'transparent'}/>
-      
-    </GestureHandlerRootView>
+    <NavigationContainer ref={navigationRef}>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <StatusBar translucent={true} backgroundColor={'transparent'} />
+        <Navigate />
+      </GestureHandlerRootView>
+    </NavigationContainer>
   );
 }
 
