@@ -1,11 +1,11 @@
 // LIB
 import {
-  Button,
   Dimensions,
   Image,
   ImageBackground,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
@@ -50,12 +50,13 @@ const HomeScreen = () => {
         autoPlayInterval={2000}
         autoPlayReverse={true}
       />
-      <Button
-        title="Go to Movie List"
-        onPress={() => {
-          // navigation.navigate('MovieListScreen');
-        }}
-      />
+      <TouchableOpacity style={styles.outlineButton}>
+        <Text style={styles.outlineText}>Get Started</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.solidButton}>
+        <Text style={styles.solidText}>Sign in</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 };
@@ -95,5 +96,32 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 10,
   },
+  outlineButton: {
+    borderWidth: 1,
+    borderColor: '#E50914',
+    borderRadius: 30,
+    paddingVertical: 12,
+    alignItems: 'center',
+    width: '80%',
+  },
+  outlineText: {
+    color: '#E50914',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  solidButton: {
+    backgroundColor: '#E50914',
+    borderRadius: 30,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginTop: 20,
+    width: '80%',
+  },
+  solidText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
+
 export default HomeScreen;
