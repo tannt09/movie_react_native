@@ -1,4 +1,5 @@
 // LIB
+import {useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -23,18 +24,21 @@ const data: ItemType[] = [
   {id: '3', image: require('@assets/images/bg_home.png')},
 ];
 
-const HomeScreen = () => {
-  const renderItem = ({item}: {item: ItemType}) => (
-    <View style={styles.itemCarouselStyle}>
-      <View style={styles.imageContainerStyle}>
-        <Image source={item.image} style={styles.imageStyle} />
-      </View>
-      <Text style={styles.titleTextStyle}>Welcome to Movie</Text>
-      <Text style={styles.textStyle}>
-        The best movie steaming app of the century to make your days great!
-      </Text>
+const renderItem = ({item}: {item: ItemType}) => (
+  <View style={styles.itemCarouselStyle}>
+    <View style={styles.imageContainerStyle}>
+      <Image source={item.image} style={styles.imageStyle} />
     </View>
-  );
+    <Text style={styles.titleTextStyle}>Welcome to Movie</Text>
+    <Text style={styles.textStyle}>
+      The best movie steaming app of the century to make your days great!
+    </Text>
+  </View>
+);
+
+const HomeScreen = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <ImageBackground
       source={require('@assets/images/bg_welcome.png')}
@@ -43,6 +47,7 @@ const HomeScreen = () => {
       <Carousel
         data={data}
         renderItem={renderItem}
+        onSnapToItem={index => setActiveIndex(index)}
         loop={true}
         width={width * 0.8}
         height={400}
@@ -50,6 +55,18 @@ const HomeScreen = () => {
         autoPlayInterval={2000}
         autoPlayReverse={true}
       />
+
+      <View style={{marginVertical: 10, flexDirection: 'row'}}>
+        {data.map((_, index) => {
+          return (
+            <View
+              key={index}
+              style={[styles.dot, index === activeIndex && styles.activeDot]}
+            />
+          );
+        })}
+      </View>
+
       <TouchableOpacity style={styles.outlineButton}>
         <Text style={styles.outlineText}>Get Started</Text>
       </TouchableOpacity>
@@ -121,6 +138,20 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: 'white',
+    marginHorizontal: 4,
+  },
+  activeDot: {
+    width: 25,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#f14334',
+    marginHorizontal: 4,
   },
 });
 
