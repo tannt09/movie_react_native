@@ -47,16 +47,19 @@ const HomeScreen = () => {
       <Carousel
         data={data}
         renderItem={renderItem}
-        onSnapToItem={index => setActiveIndex(index)}
         loop={true}
         width={width * 0.8}
         height={400}
         autoPlay={true}
         autoPlayInterval={2000}
         autoPlayReverse={true}
+        onProgressChange={(_, absoluteProgress) => {
+          const index = Math.round(absoluteProgress);
+          setActiveIndex(index);
+        }}
       />
 
-      <View style={{marginVertical: 10, flexDirection: 'row'}}>
+      <View style={{marginVertical: 20, flexDirection: 'row'}}>
         {data.map((_, index) => {
           return (
             <View
