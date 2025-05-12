@@ -1,4 +1,5 @@
 // LIB
+import {navigate} from '@/navigation/navigationService';
 import {useState} from 'react';
 import {
   Dimensions,
@@ -39,6 +40,10 @@ const renderItem = ({item}: {item: ItemType}) => (
 const HomeScreen = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const handleClickSignup = () => {
+    navigate('LoginScreen');
+  };
+
   return (
     <ImageBackground
       source={require('@assets/images/bg_welcome.png')}
@@ -74,7 +79,7 @@ const HomeScreen = () => {
         <Text style={styles.outlineText}>Get Started</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.solidButton}>
+      <TouchableOpacity style={styles.solidButton} onPress={handleClickSignup}>
         <Text style={styles.solidText}>Sign in</Text>
       </TouchableOpacity>
     </ImageBackground>
