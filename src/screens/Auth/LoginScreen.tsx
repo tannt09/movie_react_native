@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+// LIB
+import React, {useState} from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+// IMPORT
+import MediaIcon from '@assets/icons/ic_logo.svg';
+import MailIcon from '@assets/icons/ic_email.svg';
+import PassWordIcon from '@assets/icons/ic_password.svg';
+import FacebookIcon from '@assets/icons/facebook.svg';
+import GoogleIcon from '@assets/icons/google.svg';
 
 const LoginScreen = () => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -16,32 +23,36 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Icon name="mail" size={20} color="#999" style={styles.icon} />
+      <MediaIcon style={styles.logoStyle} />
       <Text style={styles.title}>Login to Your Account</Text>
 
       {/* Email Input */}
       <View style={styles.inputContainer}>
-        <Icon name="mail" size={20} color="#999" style={styles.icon} />
+        <MailIcon style={{marginEnd: 10}} />
         <TextInput placeholder="Email" style={styles.input} />
       </View>
 
       {/* Password Input */}
       <View style={styles.inputContainer}>
-        <Icon name="lock" size={20} color="#999" style={styles.icon} />
+        <PassWordIcon style={{marginEnd: 10}} />
         <TextInput
           placeholder="Password"
           secureTextEntry={!showPassword}
           style={styles.input}
         />
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Icon name={showPassword ? 'eye-off' : 'eye'} size={20} color="#999" />
+          <Ionicons
+            name={showPassword ? 'eye-off' : 'eye'}
+            size={20}
+            color="#999"
+          />
         </TouchableOpacity>
       </View>
 
       {/* Remember Me */}
       <View style={styles.rememberMe}>
         <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
-          <Icon
+          <Ionicons
             name={rememberMe ? 'check-square' : 'square'}
             size={20}
             color="#e53935"
@@ -58,7 +69,7 @@ const LoginScreen = () => {
       {/* Forgot Password */}
       <TouchableOpacity>
         <Text style={styles.forgotText}>
-          Forgot <Text style={{ fontWeight: '600' }}>password?</Text>
+          Forgot <Text style={{fontWeight: '600'}}>password?</Text>
         </Text>
       </TouchableOpacity>
 
@@ -72,22 +83,20 @@ const LoginScreen = () => {
       {/* Social Login Buttons */}
       <View style={styles.socialContainer}>
         <TouchableOpacity style={styles.socialButton}>
-          <FontAwesome name="facebook" size={24} color="#1877F2" />
+          <FacebookIcon />
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialButton}>
-          <FontAwesome name="google" size={24} color="#DB4437" />
+          <GoogleIcon />
         </TouchableOpacity>
       </View>
 
       {/* Sign Up */}
       <Text style={styles.signupText}>
-        Don’t have an account? <Text style={{ color: '#e53935' }}>Sign up</Text>
+        Don’t have an account? <Text style={{color: '#e53935'}}>Sign up</Text>
       </Text>
     </View>
   );
 };
-
-export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -95,13 +104,6 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     backgroundColor: 'white',
-  },
-  logo: {
-    fontSize: 40,
-    color: '#e53935',
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    marginBottom: 10,
   },
   title: {
     fontSize: 18,
@@ -117,9 +119,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 12,
     marginVertical: 10,
-  },
-  icon: {
-    marginRight: 8,
   },
   input: {
     flex: 1,
@@ -182,4 +181,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: '#000',
   },
+  logoStyle: {alignSelf: 'center', marginBottom: 30},
 });
+
+export default LoginScreen;
