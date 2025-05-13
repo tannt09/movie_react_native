@@ -8,7 +8,6 @@ import {
   StyleSheet,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // IMPORT
 import MediaIcon from '@assets/icons/ic_logo.svg';
