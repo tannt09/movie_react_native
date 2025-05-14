@@ -83,6 +83,7 @@ const LoginScreen = () => {
 
       {/* Login Button */}
       <TouchableOpacity
+        disabled={checkAccountEmpty}
         style={[styles.loginButton, {opacity: checkAccountEmpty ? 0.5 : 1}]}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
