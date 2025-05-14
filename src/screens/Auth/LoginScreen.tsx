@@ -1,5 +1,5 @@
 // LIB
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -17,8 +17,19 @@ import FacebookIcon from '@assets/icons/facebook.svg';
 import GoogleIcon from '@assets/icons/google.svg';
 
 const LoginScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [checkAccountEmpty, setCheckAccountEmpty] = useState(false);
+
+  useEffect(() => {
+    if (email !== '' && password !== '') {
+      setCheckAccountEmpty(false);
+    } else {
+      setCheckAccountEmpty(true);
+    }
+  }, [email, password]);
 
   return (
     <View style={styles.container}>
@@ -28,16 +39,26 @@ const LoginScreen = () => {
       {/* Email Input */}
       <View style={styles.inputContainer}>
         <MailIcon style={{marginEnd: 10}} />
-        <TextInput placeholder="Email" style={styles.input} />
+        <TextInput
+          value={email}
+          placeholder="Email"
+          style={styles.input}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={text => setEmail(text)}
+        />
       </View>
 
       {/* Password Input */}
       <View style={styles.inputContainer}>
         <PassWordIcon style={{marginEnd: 10}} />
         <TextInput
+          value={password}
           placeholder="Password"
           secureTextEntry={!showPassword}
           style={styles.input}
+          onChangeText={text => setPassword(text)}
         />
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
           <Ionicons
@@ -61,7 +82,8 @@ const LoginScreen = () => {
       </View>
 
       {/* Login Button */}
-      <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity
+        style={[styles.loginButton, {opacity: checkAccountEmpty ? 0.5 : 1}]}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
 
