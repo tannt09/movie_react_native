@@ -1,6 +1,6 @@
 // LIB
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import {NavigationContainer, NavigationState} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
@@ -21,12 +21,16 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <NavigationContainer ref={navigationRef} onStateChange={handleStateChange}>
-      <GestureHandlerRootView style={{flex: 1}}>
-        <StatusBar translucent={true} backgroundColor={'transparent'} />
-        <Navigate />
-      </GestureHandlerRootView>
-    </NavigationContainer>
+    <SafeAreaView style={{flex: 1}}>
+      <NavigationContainer
+        ref={navigationRef}
+        onStateChange={handleStateChange}>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <StatusBar translucent={true} backgroundColor={'transparent'} />
+          <Navigate />
+        </GestureHandlerRootView>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
 
