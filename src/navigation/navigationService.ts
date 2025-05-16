@@ -1,5 +1,8 @@
 // LIB
-import {createNavigationContainerRef} from '@react-navigation/native';
+import {
+  createNavigationContainerRef,
+  StackActions,
+} from '@react-navigation/native';
 
 // IMPORT
 import {RootStackParamList} from '@models/navigationModels';
@@ -16,6 +19,15 @@ export function navigate<T extends keyof RootStackParamList>(
 }
 
 export function replace<T extends keyof RootStackParamList>(
+  name: T,
+  params?: RootStackParamList[T],
+) {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.replace(name as any, params as any));
+  }
+}
+
+export function reset<T extends keyof RootStackParamList>(
   name: T,
   params?: RootStackParamList[T],
 ) {

@@ -5,12 +5,12 @@ import {StyleSheet, View} from 'react-native';
 // IMPORT
 import MediaIcon from '@assets/icons/ic_logo.svg';
 import LoadingDots from '@/components/LoadingDots';
-import {replace} from '@/navigation/navigationService';
+import {reset} from '@/navigation/navigationService';
 
 const SplashScreen = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      replace('HomeScreen');
+      reset('HomeScreen');
     }, 5000);
 
     return () => clearTimeout(timer);
