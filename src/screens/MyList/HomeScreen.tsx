@@ -1,12 +1,12 @@
 // LIB
 import {Text, View} from 'react-native';
 
-const HomeScreen = () => {
+const MyListScreen = () => {
   return (
     <View>
-      <Text>HomeScreen</Text>
+      <Text>MyListScreen</Text>
     </View>
   );
 };
 
-export default HomeScreen;
+export default MyListScreen;

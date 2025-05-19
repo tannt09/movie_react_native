@@ -10,7 +10,7 @@ import {reset} from '@/navigation/navigationService';
 const SplashScreen = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      reset('HomeScreen');
+      reset('WellcomeScreen');
     }, 5000);
 
     return () => clearTimeout(timer);

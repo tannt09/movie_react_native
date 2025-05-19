@@ -15,6 +15,7 @@ import MailIcon from '@assets/icons/ic_email.svg';
 import PassWordIcon from '@assets/icons/ic_password.svg';
 import FacebookIcon from '@assets/icons/facebook.svg';
 import GoogleIcon from '@assets/icons/google.svg';
+import { reset } from '@/navigation/navigationService';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -30,6 +31,10 @@ const LoginScreen = () => {
       setCheckAccountEmpty(true);
     }
   }, [email, password]);
+
+  const onHandleLogin = () => {
+    reset('BottomTabs')
+  };
 
   return (
     <View style={styles.container}>
@@ -84,6 +89,7 @@ const LoginScreen = () => {
       {/* Login Button */}
       <TouchableOpacity
         disabled={checkAccountEmpty}
+        onPress={onHandleLogin}
         style={[styles.loginButton, {opacity: checkAccountEmpty ? 0.5 : 1}]}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
