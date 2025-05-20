@@ -15,4 +15,5 @@
     },
     "types": ["react-native-reanimated"],
   },
+  "include": ["src/env.d.ts", "src/**/*"]
 }
