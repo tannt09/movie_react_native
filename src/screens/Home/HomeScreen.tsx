@@ -1,26 +1,22 @@
 // LIB
 import {useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {Alert, Text, View} from 'react-native';
 
 // IMPORT
-import api from '@/services/axiosConfig';
+import {getMovieDetail} from '@/api/home';
 
 const HomeScreen = () => {
-  const getMovieDetail = async ({id}: {id: number}) => {
+  const fetchMovieDetail = async () => {
     try {
-      const response = await api.get(`/movie/${id}`, {
-        params: {
-          language: 'en-US',
-        },
-      });
-      console.log('----1111', response.data);
-    } catch (error) {
-      console.error('Error Get Movie Detail ', error);
+      const movie = await getMovieDetail({id: 123});
+
+      console.log('----1111 ', movie);
+    } catch (err) {
+      Alert.alert('Unable to load movie details', `${err}`);
     }
   };
-
   useEffect(() => {
-    getMovieDetail({id: 278});
+    fetchMovieDetail();
   }, []);
 
   return (
