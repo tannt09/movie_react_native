@@ -12,7 +12,7 @@ const HomeScreen = () => {
 
       console.log('----1111 ', movie);
     } catch (err) {
-      Alert.alert('Unable to load movie details', `${err}`);
+      Alert.alert('Unable to load movie details ', `${err}`);
     }
   };
   useEffect(() => {
