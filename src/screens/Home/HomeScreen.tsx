@@ -1,26 +1,25 @@
 // LIB
 import {useEffect} from 'react';
-import {Alert, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 
 // IMPORT
-import {getMovieDetail} from '@/api/home';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchMovieDetail} from '@redux/Slice/HomeSlice';
+import {AppDispatch, RootState} from '@redux/store';
 
 const HomeScreen = () => {
-  const fetchMovieDetail = async () => {
-    try {
-      const movie = await getMovieDetail({id: 123});
+  const {isLoading, movieDetail} = useSelector(
+    (state: RootState) => state.home,
+  );
+  const dispatch = useDispatch<AppDispatch>();
 
-      console.log('----1111 ', movie);
-    } catch (err) {
-      Alert.alert('Unable to load movie details ', `${err}`);
-    }
-  };
   useEffect(() => {
-    fetchMovieDetail();
+    dispatch(fetchMovieDetail(123));
   }, []);
 
   return (
     <View>
+      {/* <MediaIcon /> */}
       <Text>HomeScreen</Text>
     </View>
   );

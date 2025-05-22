@@ -15,6 +15,7 @@ module.exports = {
           '@utils': './src/utils',
           '@context': './src/context',
           '@models': './src/models',
+          '@redux': './src/redux',
         },
       },
     ],

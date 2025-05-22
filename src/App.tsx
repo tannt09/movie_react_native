@@ -3,10 +3,12 @@ import React from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 import {NavigationContainer, NavigationState} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {Provider} from 'react-redux';
 
 // IMPORT
-import {navigationRef} from './src/navigation/navigationService';
-import Navigate from './src/navigation/navigate';
+import {navigationRef} from './navigation/navigationService';
+import Navigate from './navigation/navigate';
+import store from './redux/store';
 
 function App(): React.JSX.Element {
   const handleStateChange = (state: Readonly<NavigationState> | undefined) => {
@@ -22,14 +24,16 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <NavigationContainer
-        ref={navigationRef}
-        onStateChange={handleStateChange}>
-        <GestureHandlerRootView style={{flex: 1}}>
-          <StatusBar translucent={true} backgroundColor={'transparent'} />
-          <Navigate />
-        </GestureHandlerRootView>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer
+          ref={navigationRef}
+          onStateChange={handleStateChange}>
+          <GestureHandlerRootView style={{flex: 1}}>
+            <StatusBar translucent={true} backgroundColor={'transparent'} />
+            <Navigate />
+          </GestureHandlerRootView>
+        </NavigationContainer>
+      </Provider>
     </SafeAreaView>
   );
 }
