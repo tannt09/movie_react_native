@@ -9,12 +9,15 @@ import {
   View,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useDispatch, useSelector} from 'react-redux';
 
 // IMPORT
-import {useDispatch, useSelector} from 'react-redux';
 import {fetchMovieDetail} from '@redux/Slice/HomeSlice';
 import {AppDispatch, RootState} from '@redux/store';
 import Play from '@assets/icons/ic_play.svg';
+import Logo from '@assets/icons/ic_logo.svg';
+import Search from '@assets/icons/ic_search.svg';
+import Notification from '@assets/icons/ic_notification.svg';
 
 const HomeScreen = () => {
   const {isLoading, movieDetail} = useSelector(
@@ -45,6 +48,13 @@ const HomeScreen = () => {
           style={styles.trailerImage}
           resizeMode="cover"
         />
+        <View style={styles.titleIconContainer}>
+          <Logo width={30} height={30} />
+          <View style={{flex: 1}} />
+          <Search width={30} height={30} />
+          <View style={{width: 20}} />
+          <Notification width={30} height={30} />
+        </View>
         <View style={styles.overlay}>
           <Text style={styles.title}>{movieDetail?.title ?? ''}</Text>
           <Text style={styles.subtitle}>{getNameGenres()}</Text>
@@ -55,11 +65,7 @@ const HomeScreen = () => {
               <Text style={styles.playButtonText}>Play</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.listButton}>
-              <Ionicons
-                name={'add'}
-                size={20}
-                color="#fff"
-              />
+              <Ionicons name={'add'} size={20} color="#fff" />
               <View style={{width: 10}} />
               <Text style={styles.playButtonText}>My List</Text>
             </TouchableOpacity>
@@ -89,15 +95,24 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
   },
+  titleIconContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    right: 20,
+    alignItems: 'center',
+  },
   title: {
     color: '#fff',
     fontSize: 32,
-    fontWeight: 'bold',
+    fontFamily: 'KoHo-Bold',
   },
   subtitle: {
     color: '#fff',
     marginVertical: 8,
     fontSize: 18,
+    fontFamily: 'KoHo-Medium',
   },
   buttonRow: {
     flexDirection: 'row',
@@ -115,6 +130,7 @@ const styles = StyleSheet.create({
   playButtonText: {
     color: '#fff',
     fontSize: 18,
+    fontFamily: 'KoHo-Medium',
   },
   listButton: {
     flexDirection: 'row',
@@ -123,11 +139,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 30,
-    alignItems: 'center'
-  },
-  listButtonText: {
-    color: '#fff',
-    fontWeight: '600',
+    alignItems: 'center',
   },
 });
 
