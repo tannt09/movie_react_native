@@ -61,6 +61,7 @@ const BottomTabs = () => {
         },
         tabBarActiveTintColor: '#E21221',
         tabBarInactiveTintColor: 'gray',
+        headerShown: false
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Explore" component={ExploreScreen} />

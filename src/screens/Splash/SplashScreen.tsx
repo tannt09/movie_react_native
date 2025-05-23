@@ -11,7 +11,7 @@ const SplashScreen = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       reset('WellcomeScreen');
-    }, 5000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
