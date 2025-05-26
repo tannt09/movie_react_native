@@ -1,6 +1,6 @@
 // LIB
 import api from '@/services/axiosConfig';
-import {handleResponse} from '@/untils/handleResponse';
+import {handleResponse} from '@/utils/handleResponse';
 
 export const getMovieDetail = async ({id}: {id: number}) => {
   try {

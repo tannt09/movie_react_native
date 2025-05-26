@@ -1,4 +1,5 @@
 // LIB
+import { COLORS } from '@constants/colors';
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 
@@ -45,14 +46,14 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 6,
-    backgroundColor: '#f14334',
+    backgroundColor: COLORS.PRIMARILY,
     marginHorizontal: 4,
   },
   activeDot: {
     width: 30,
     height: 10,
     borderRadius: 6,
-    backgroundColor: '#f14334',
+    backgroundColor: COLORS.PRIMARILY,
     marginHorizontal: 4,
   },
 });

@@ -16,6 +16,7 @@ module.exports = {
           '@context': './src/context',
           '@models': './src/models',
           '@redux': './src/redux',
+          '@constants': './src/constants',
         },
       },
     ],

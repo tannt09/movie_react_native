@@ -18,6 +18,7 @@ import Play from '@assets/icons/ic_play.svg';
 import Logo from '@assets/icons/ic_logo.svg';
 import Search from '@assets/icons/ic_search.svg';
 import Notification from '@assets/icons/ic_notification.svg';
+import { COLORS } from '@constants/colors';
 
 const HomeScreen = () => {
   const {isLoading, movieDetail} = useSelector(
@@ -72,6 +73,13 @@ const HomeScreen = () => {
           </View>
         </View>
       </View>
+
+      {/* <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Now playing</Text>
+          <Text style={styles.seeAll}>See all</Text>
+        </View>
+      </View> */}
     </ScrollView>
   );
 };
@@ -120,7 +128,7 @@ const styles = StyleSheet.create({
   },
   playButton: {
     flexDirection: 'row',
-    backgroundColor: '#f44336',
+    backgroundColor: COLORS.PRIMARILY,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 30,
@@ -141,6 +149,23 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
   },
+  // section: {
+  //   paddingHorizontal: 20,
+  //   paddingTop: 20,
+  // },
+  // sectionHeader: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   marginBottom: 10,
+  // },
+  // sectionTitle: {
+  //   fontSize: 18,
+  //   fontWeight: '600',
+  // },
+  // seeAll: {
+  //   color: '#E21221',
+  //   fontWeight: '500',
+  // },
 });
 
 export default HomeScreen;

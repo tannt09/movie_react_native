@@ -12,7 +12,8 @@
       "@utils/*": ["./utils/*"],
       "@context/*": ["./context/*"],
       "@models/*": ["./models/*"],
-      "@redux/*": ["./redux/*"]
+      "@redux/*": ["./redux/*"],
+      "@constants/*": ["./constants/*"],
     },
     "types": ["react-native-reanimated"],
   },

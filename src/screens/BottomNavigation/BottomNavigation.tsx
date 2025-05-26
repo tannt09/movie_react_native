@@ -18,6 +18,7 @@ import DownloadIcon from '@assets/icons/ic_tab_download.svg';
 import SelectedDownloadIcon from '@assets/icons/ic_tab_selected_download.svg';
 import ProfileIcon from '@assets/icons/ic_tab_profile.svg';
 import SelectedProfileIcon from '@assets/icons/ic_tab_selected_profile.svg';
+import { COLORS } from '@constants/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -59,8 +60,8 @@ const BottomTabs = () => {
             : iconMap[route.name as TabRouteName].inactive;
           return iconName;
         },
-        tabBarActiveTintColor: '#E21221',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: COLORS.RED,
+        tabBarInactiveTintColor: COLORS.GRAY,
         headerShown: false
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />

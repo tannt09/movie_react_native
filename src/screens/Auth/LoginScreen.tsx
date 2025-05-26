@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 // IMPORT
 import MediaIcon from '@assets/icons/ic_logo.svg';
@@ -15,7 +15,8 @@ import MailIcon from '@assets/icons/ic_email.svg';
 import PassWordIcon from '@assets/icons/ic_password.svg';
 import FacebookIcon from '@assets/icons/facebook.svg';
 import GoogleIcon from '@assets/icons/google.svg';
-import { reset } from '@/navigation/navigationService';
+import {reset} from '@/navigation/navigationService';
+import {COLORS} from '@constants/colors';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -33,7 +34,7 @@ const LoginScreen = () => {
   }, [email, password]);
 
   const onHandleLogin = () => {
-    reset('BottomTabs')
+    reset('BottomTabs');
   };
 
   return (
@@ -66,7 +67,7 @@ const LoginScreen = () => {
           onChangeText={text => setPassword(text)}
         />
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Ionicons
+          <FontAwesome6
             name={showPassword ? 'eye-off' : 'eye'}
             size={20}
             color="#999"
@@ -77,10 +78,10 @@ const LoginScreen = () => {
       {/* Remember Me */}
       <View style={styles.rememberMe}>
         <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
-          <Ionicons
-            name={rememberMe ? 'check-square' : 'square'}
+          <FontAwesome6
+            name={rememberMe ? 'square-check' : 'square'}
             size={20}
-            color="#e53935"
+            color={COLORS.PRIMARILY}
           />
         </TouchableOpacity>
         <Text style={styles.rememberMeText}> Remember me</Text>
@@ -96,9 +97,7 @@ const LoginScreen = () => {
 
       {/* Forgot Password */}
       <TouchableOpacity>
-        <Text style={styles.forgotText}>
-          Forgot <Text style={{fontWeight: '600'}}>password?</Text>
-        </Text>
+        <Text style={styles.forgotText}>Forgot password?</Text>
       </TouchableOpacity>
 
       {/* Divider */}
@@ -120,7 +119,8 @@ const LoginScreen = () => {
 
       {/* Sign Up */}
       <Text style={styles.signupText}>
-        Don’t have an account? <Text style={{color: '#e53935'}}>Sign up</Text>
+        Don’t have an account?{' '}
+        <Text style={{color: COLORS.PRIMARILY}}>Sign up</Text>
       </Text>
     </View>
   );
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F8F9FA',
+    backgroundColor: COLORS.GRAY100,
     borderRadius: 12,
     paddingHorizontal: 12,
     marginVertical: 10,
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   loginButton: {
-    backgroundColor: '#e53935',
+    backgroundColor: COLORS.PRIMARILY,
     paddingVertical: 14,
     borderRadius: 28,
     alignItems: 'center',
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   forgotText: {
-    color: '#e53935',
+    color: COLORS.PRIMARILY,
     textAlign: 'center',
     marginTop: 10,
   },
@@ -186,11 +186,11 @@ const styles = StyleSheet.create({
   line: {
     flex: 1,
     height: 1,
-    backgroundColor: '#ccc',
+    backgroundColor: COLORS.LIGHT_GRAY,
   },
   orText: {
     marginHorizontal: 8,
-    color: '#999',
+    color: COLORS.GRAY,
   },
   socialContainer: {
     flexDirection: 'row',
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   },
   socialButton: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: COLORS.LIGHT_GRAY,
     padding: 12,
     borderRadius: 8,
     marginHorizontal: 10,
