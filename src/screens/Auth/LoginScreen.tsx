@@ -5,9 +5,9 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
 } from 'react-native';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import { ScaledSheet } from 'react-native-size-matters';
 
 // IMPORT
 import MediaIcon from '@assets/icons/ic_logo.svg';
@@ -126,7 +126,7 @@ const LoginScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     padding: 20,

@@ -1,7 +1,10 @@
 // LIB
-import { COLORS } from '@constants/colors';
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View} from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
+
+// IMPORT
+import { COLORS } from '@constants/colors';
 
 const LoadingDots = ({
   interval = 500,
@@ -37,7 +40,7 @@ const LoadingDots = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',

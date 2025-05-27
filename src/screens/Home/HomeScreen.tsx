@@ -1,15 +1,9 @@
 // LIB
 import {useEffect} from 'react';
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
+import {ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
 import {fetchMovieDetail} from '@redux/Slice/HomeSlice';
@@ -18,7 +12,7 @@ import Play from '@assets/icons/ic_play.svg';
 import Logo from '@assets/icons/ic_logo.svg';
 import Search from '@assets/icons/ic_search.svg';
 import Notification from '@assets/icons/ic_notification.svg';
-import { COLORS } from '@constants/colors';
+import {COLORS} from '@constants/colors';
 
 const HomeScreen = () => {
   const {isLoading, movieDetail} = useSelector(
@@ -41,6 +35,7 @@ const HomeScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
+      {/* Poster */}
       <View style={styles.trailerContainer}>
         <Image
           source={{
@@ -74,17 +69,18 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      {/* <View style={styles.section}>
+      {/* Now playing list */}
+      <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Now playing</Text>
           <Text style={styles.seeAll}>See all</Text>
         </View>
-      </View> */}
+      </View>
     </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     backgroundColor: '#000',
   },
@@ -149,23 +145,23 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
   },
-  // section: {
-  //   paddingHorizontal: 20,
-  //   paddingTop: 20,
-  // },
-  // sectionHeader: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   marginBottom: 10,
-  // },
-  // sectionTitle: {
-  //   fontSize: 18,
-  //   fontWeight: '600',
-  // },
-  // seeAll: {
-  //   color: '#E21221',
-  //   fontWeight: '500',
-  // },
+  section: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  seeAll: {
+    color: '#E21221',
+    fontWeight: '500',
+  },
 });
 
 export default HomeScreen;

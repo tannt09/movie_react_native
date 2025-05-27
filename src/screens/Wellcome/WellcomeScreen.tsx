@@ -1,16 +1,19 @@
 // LIB
-import {navigate} from '@/navigation/navigationService';
 import {useState} from 'react';
 import {
   Dimensions,
   Image,
   ImageBackground,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
+import { ScaledSheet } from 'react-native-size-matters';
+
+// IMPORT
+import { COLORS } from '@constants/colors';
+import {navigate} from '@/navigation/navigationService';
 
 type ItemType = {
   id: string;
@@ -86,7 +89,7 @@ const WellcomeScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   background: {
     flex: 1,
     justifyContent: 'center',
@@ -123,19 +126,19 @@ const styles = StyleSheet.create({
   },
   outlineButton: {
     borderWidth: 1,
-    borderColor: '#E50914',
+    borderColor: COLORS.RED,
     borderRadius: 30,
     paddingVertical: 12,
     alignItems: 'center',
     width: '80%',
   },
   outlineText: {
-    color: '#E50914',
+    color: COLORS.RED,
     fontSize: 16,
     fontWeight: '600',
   },
   solidButton: {
-    backgroundColor: '#E50914',
+    backgroundColor: COLORS.RED,
     borderRadius: 30,
     paddingVertical: 12,
     alignItems: 'center',
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#f14334',
+    backgroundColor: COLORS.PRIMARILY,
     marginHorizontal: 4,
   },
 });
