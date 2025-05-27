@@ -1,37 +1,18 @@
 // LIB
-import {useEffect} from 'react';
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useDispatch, useSelector} from 'react-redux';
 import {ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
-import {fetchMovieDetail} from '@redux/Slice/HomeSlice';
-import {AppDispatch, RootState} from '@redux/store';
 import Play from '@assets/icons/ic_play.svg';
 import Logo from '@assets/icons/ic_logo.svg';
 import Search from '@assets/icons/ic_search.svg';
 import Notification from '@assets/icons/ic_notification.svg';
 import {COLORS} from '@constants/colors';
+import useHomeLogic from './Home.logic';
 
 const HomeScreen = () => {
-  const {isLoading, movieDetail} = useSelector(
-    (state: RootState) => state.home,
-  );
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    const ids = [278, 238, 240, 424, 389, 129, 497, 680, 372058, 122, 13];
-    const index = Math.floor(Math.random() * ids.length);
-    const randomId = ids[index];
-
-    dispatch(fetchMovieDetail(randomId));
-  }, []);
-
-  const getNameGenres = () => {
-    if (!movieDetail?.genres) return '';
-    return movieDetail.genres.map(item => item.name).join(', ');
-  };
+  const {isLoading, movieDetail, nowPlayMovies, getNameGenres} = useHomeLogic();
 
   return (
     <ScrollView style={styles.container}>
@@ -76,13 +57,15 @@ const HomeScreen = () => {
           <Text style={styles.seeAll}>See all</Text>
         </View>
       </View>
+      {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      </ScrollView> */}
     </ScrollView>
   );
 };
 
 const styles = ScaledSheet.create({
   container: {
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
   },
   trailerContainer: {
     height: 400,
@@ -155,12 +138,13 @@ const styles = ScaledSheet.create({
     marginBottom: 10,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 22,
+    fontFamily: 'KoHo-Medium',
   },
   seeAll: {
-    color: '#E21221',
-    fontWeight: '500',
+    fontSize: 18,
+    color: COLORS.PRIMARILY,
+    fontFamily: 'KoHo-Medium',
   },
 });
 

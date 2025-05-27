@@ -3,11 +3,12 @@ import {Alert} from 'react-native';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 // IMPORT
-import {getMovieDetail} from '@/api/home';
+import {getMovieDetail, getMovies} from '@/api/home';
 import {MovieDetailModel} from '@/models/homeModels';
 
 interface HomeState {
   movieDetail?: MovieDetailModel;
+  nowPlayMovies?: MovieDetailModel[];
   isLoading: boolean;
   error?: string;
 }
@@ -29,6 +30,19 @@ export const fetchMovieDetail = createAsyncThunk(
   },
 );
 
+export const fetchMovies = createAsyncThunk(
+  'getMovies',
+  async ({page, endpoint}: {page: number; endpoint: string}) => {
+    try {
+      const movies = await getMovies({page, endpoint});
+
+      return movies;
+    } catch (err) {
+      Alert.alert('Unable to load now play movies ', `${err}`);
+    }
+  },
+);
+
 const homeSlice = createSlice({
   name: 'home',
   initialState,
@@ -43,6 +57,22 @@ const homeSlice = createSlice({
         state.movieDetail = action.payload;
       })
       .addCase(fetchMovieDetail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.toString();
+      })
+      .addCase(fetchMovies.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(fetchMovies.fulfilled, (state, action) => {
+        state.isLoading = false;
+        switch (action.meta.arg.endpoint) {
+          case 'now_playing':
+            state.nowPlayMovies = action.payload?.results;
+          default:
+            console.log('No action matched.');
+        }
+      })
+      .addCase(fetchMovies.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.toString();
       });

@@ -26,7 +26,7 @@ export interface MovieDetailModel {
   backdrop_path: string | null;
   belongs_to_collection: any;
   budget: number;
-  genres: GenreModel[];
+  genres: GenreModel[] | null;
   homepage: string;
   id: number;
   imdb_id: string;
@@ -48,4 +48,16 @@ export interface MovieDetailModel {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  genre_ids: number[] | null;
+}
+
+export interface MovieListResponseModel {
+  dates: {
+    maximum: string;
+    minimum: string;
+  };
+  page: number;
+  results: MovieDetailModel[];
+  total_pages: number;
+  total_results: number;
 }
