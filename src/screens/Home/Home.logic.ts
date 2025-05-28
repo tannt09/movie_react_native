@@ -7,9 +7,14 @@ import {AppDispatch, RootState} from '@redux/store';
 import {fetchMovieDetail, fetchMovies} from '@redux/Slice/HomeSlice';
 
 const useHomeLogic = () => {
-  const {isLoading, movieDetail, nowPlayMovies, topRatedMovies} = useSelector(
-    (state: RootState) => state.home,
-  );
+  const {
+    isLoading,
+    movieDetail,
+    nowPlayMovies,
+    topRatedMovies,
+    upcomingMovies,
+    popularMovies,
+  } = useSelector((state: RootState) => state.home);
   const dispatch = useDispatch<AppDispatch>();
 
   const getMovieDetail = () => {
@@ -28,6 +33,8 @@ const useHomeLogic = () => {
     getMovieDetail();
     getMovies(1, 'now_playing');
     getMovies(1, 'top_rated');
+    getMovies(1, 'upcoming');
+    getMovies(1, 'popular');
   }, []);
 
   const getNameGenres = () => {
@@ -40,6 +47,8 @@ const useHomeLogic = () => {
     movieDetail,
     nowPlayMovies,
     topRatedMovies,
+    upcomingMovies,
+    popularMovies,
     getNameGenres,
   };
 };

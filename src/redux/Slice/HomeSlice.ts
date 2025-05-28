@@ -10,6 +10,8 @@ interface HomeState {
   movieDetail?: MovieDetailModel;
   nowPlayMovies?: MovieDetailModel[];
   topRatedMovies?: MovieDetailModel[];
+  upcomingMovies?: MovieDetailModel[];
+  popularMovies?: MovieDetailModel[];
   isLoading: boolean;
   error?: string;
 }
@@ -69,10 +71,18 @@ const homeSlice = createSlice({
         switch (action.meta.arg.endpoint) {
           case 'now_playing':
             state.nowPlayMovies = action.payload?.results;
+            break;
           case 'top_rated':
             state.topRatedMovies = action.payload?.results;
+            break;
+          case 'upcoming':
+            state.upcomingMovies = action.payload?.results;
+            break;
+          case 'popular':
+            state.popularMovies = action.payload?.results;
+            break;
           default:
-            console.log('No action matched.');
+            console.log('No action matched. ');
         }
       })
       .addCase(fetchMovies.rejected, (state, action) => {

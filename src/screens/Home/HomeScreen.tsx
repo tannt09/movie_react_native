@@ -13,8 +13,15 @@ import useHomeLogic from './Home.logic';
 import HorizontalMovies from '@/components/HorizontalMovies';
 
 const HomeScreen = () => {
-  const {isLoading, movieDetail, nowPlayMovies, topRatedMovies, getNameGenres} =
-    useHomeLogic();
+  const {
+    isLoading,
+    movieDetail,
+    nowPlayMovies,
+    topRatedMovies,
+    upcomingMovies,
+    popularMovies,
+    getNameGenres,
+  } = useHomeLogic();
 
   return (
     <ScrollView style={styles.container}>
@@ -60,6 +67,16 @@ const HomeScreen = () => {
       {/* Top rate videos */}
       {topRatedMovies && (
         <HorizontalMovies movies={topRatedMovies} title={'Top rate'} />
+      )}
+
+      {/* Upcomming videos */}
+      {upcomingMovies && (
+        <HorizontalMovies movies={upcomingMovies} title={'Upcoming'} />
+      )}
+
+      {/* Popular videos */}
+      {popularMovies && (
+        <HorizontalMovies movies={popularMovies} title={'Popular'} />
       )}
     </ScrollView>
   );
