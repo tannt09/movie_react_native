@@ -7,7 +7,7 @@ import {AppDispatch, RootState} from '@redux/store';
 import {fetchMovieDetail, fetchMovies} from '@redux/Slice/HomeSlice';
 
 const useHomeLogic = () => {
-  const {isLoading, movieDetail, nowPlayMovies} = useSelector(
+  const {isLoading, movieDetail, nowPlayMovies, topRatedMovies} = useSelector(
     (state: RootState) => state.home,
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -27,6 +27,7 @@ const useHomeLogic = () => {
   useEffect(() => {
     getMovieDetail();
     getMovies(1, 'now_playing');
+    getMovies(1, 'top_rated');
   }, []);
 
   const getNameGenres = () => {
@@ -34,12 +35,11 @@ const useHomeLogic = () => {
     return movieDetail.genres.map(item => item.name).join(', ');
   };
 
-  console.log('----2222 ', nowPlayMovies);
-
   return {
     isLoading,
     movieDetail,
     nowPlayMovies,
+    topRatedMovies,
     getNameGenres,
   };
 };

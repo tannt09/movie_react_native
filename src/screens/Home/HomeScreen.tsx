@@ -10,9 +10,11 @@ import Search from '@assets/icons/ic_search.svg';
 import Notification from '@assets/icons/ic_notification.svg';
 import {COLORS} from '@constants/colors';
 import useHomeLogic from './Home.logic';
+import HorizontalMovies from '@/components/HorizontalMovies';
 
 const HomeScreen = () => {
-  const {isLoading, movieDetail, nowPlayMovies, getNameGenres} = useHomeLogic();
+  const {isLoading, movieDetail, nowPlayMovies, topRatedMovies, getNameGenres} =
+    useHomeLogic();
 
   return (
     <ScrollView style={styles.container}>
@@ -50,15 +52,15 @@ const HomeScreen = () => {
         </View>
       </View>
 
-      {/* Now playing list */}
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Now playing</Text>
-          <Text style={styles.seeAll}>See all</Text>
-        </View>
-      </View>
-      {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      </ScrollView> */}
+      {/* Now playing videos */}
+      {nowPlayMovies && (
+        <HorizontalMovies movies={nowPlayMovies} title={'Now playing'} />
+      )}
+
+      {/* Top rate videos */}
+      {topRatedMovies && (
+        <HorizontalMovies movies={topRatedMovies} title={'Top rate'} />
+      )}
     </ScrollView>
   );
 };
@@ -127,24 +129,6 @@ const styles = ScaledSheet.create({
     paddingHorizontal: 20,
     borderRadius: 30,
     alignItems: 'center',
-  },
-  section: {
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  sectionTitle: {
-    fontSize: 22,
-    fontFamily: 'KoHo-Medium',
-  },
-  seeAll: {
-    fontSize: 18,
-    color: COLORS.PRIMARILY,
-    fontFamily: 'KoHo-Medium',
   },
 });
 

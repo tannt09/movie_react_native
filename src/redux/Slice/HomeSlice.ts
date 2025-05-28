@@ -9,6 +9,7 @@ import {MovieDetailModel} from '@/models/homeModels';
 interface HomeState {
   movieDetail?: MovieDetailModel;
   nowPlayMovies?: MovieDetailModel[];
+  topRatedMovies?: MovieDetailModel[];
   isLoading: boolean;
   error?: string;
 }
@@ -68,6 +69,8 @@ const homeSlice = createSlice({
         switch (action.meta.arg.endpoint) {
           case 'now_playing':
             state.nowPlayMovies = action.payload?.results;
+          case 'top_rated':
+            state.topRatedMovies = action.payload?.results;
           default:
             console.log('No action matched.');
         }
