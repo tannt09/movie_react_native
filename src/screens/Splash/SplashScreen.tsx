@@ -4,7 +4,7 @@ import {StyleSheet, View} from 'react-native';
 
 // IMPORT
 import MediaIcon from '@assets/icons/ic_logo.svg';
-import LoadingDots from '@/components/LoadingDots';
+import LoadingDots from '@/components/splash/LoadingDots';
 import {reset} from '@/navigation/navigationService';
 
 const SplashScreen = () => {

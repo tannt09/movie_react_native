@@ -10,7 +10,8 @@ import Search from '@assets/icons/ic_search.svg';
 import Notification from '@assets/icons/ic_notification.svg';
 import {COLORS} from '@constants/colors';
 import useHomeLogic from './Home.logic';
-import HorizontalMovies from '@/components/HorizontalMovies';
+import {navigate} from '@/navigation/navigationService';
+import HorizontalMovies from '@/components/home/HorizontalMovies';
 
 const HomeScreen = () => {
   const {
@@ -61,22 +62,38 @@ const HomeScreen = () => {
 
       {/* Now playing videos */}
       {nowPlayMovies && (
-        <HorizontalMovies movies={nowPlayMovies} title={'Now playing'} />
+        <HorizontalMovies
+          movies={nowPlayMovies}
+          title={'Now playing'}
+          onPress={() => navigate('SeeAllScreen', {title: 'Now playing'})}
+        />
       )}
 
       {/* Top rate videos */}
       {topRatedMovies && (
-        <HorizontalMovies movies={topRatedMovies} title={'Top rate'} />
+        <HorizontalMovies
+          movies={topRatedMovies}
+          title={'Top rate'}
+          onPress={() => navigate('SeeAllScreen', {title: 'Top rate'})}
+        />
       )}
 
       {/* Upcomming videos */}
       {upcomingMovies && (
-        <HorizontalMovies movies={upcomingMovies} title={'Upcoming'} />
+        <HorizontalMovies
+          movies={upcomingMovies}
+          title={'Upcoming'}
+          onPress={() => navigate('SeeAllScreen', {title: 'Upcoming'})}
+        />
       )}
 
       {/* Popular videos */}
       {popularMovies && (
-        <HorizontalMovies movies={popularMovies} title={'Popular'} />
+        <HorizontalMovies
+          movies={popularMovies}
+          title={'Popular'}
+          onPress={() => navigate('SeeAllScreen', {title: 'Popular'})}
+        />
       )}
     </ScrollView>
   );

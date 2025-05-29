@@ -1,10 +1,10 @@
 // LIB
 import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters';
+import {ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
-import { COLORS } from '@constants/colors';
+import {COLORS} from '@constants/colors';
 
 const LoadingDots = ({
   interval = 500,

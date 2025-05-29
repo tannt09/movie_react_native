@@ -5,13 +5,15 @@ import {ScaledSheet} from 'react-native-size-matters';
 // IMPORT
 import {COLORS} from '@/constants/colors';
 import {MovieDetailModel} from '@/models/homeModels';
+import ItemMovie from '../common/ItemMovie';
 
 interface HorizontalMoviesProp {
   movies: MovieDetailModel[];
   title: string;
+  onPress: () => void
 }
 
-const HorizontalMovies: React.FC<HorizontalMoviesProp> = ({movies, title}) => {
+const HorizontalMovies: React.FC<HorizontalMoviesProp> = ({movies, title, onPress}) => {
   return (
     <>
       <View style={styles.section}>
@@ -26,19 +28,8 @@ const HorizontalMovies: React.FC<HorizontalMoviesProp> = ({movies, title}) => {
         style={{marginHorizontal: 20}}>
         {movies.map((movie, index) => {
           return (
-            <View key={index} style={styles.movieCard}>
-              <Image
-                source={{
-                  uri: `http://image.tmdb.org/t/p/w500${movie.poster_path}`,
-                }}
-                style={styles.movieImage}
-                resizeMode="cover"
-              />
-              <View style={styles.ratingBadge}>
-                <Text style={styles.ratingText}>
-                  {movie.vote_average.toFixed(1)}
-                </Text>
-              </View>
+            <View key={index} style={{marginEnd: 16}}>
+              <ItemMovie movie={movie} />
             </View>
           );
         })}
@@ -65,31 +56,6 @@ const styles = ScaledSheet.create({
     fontSize: 18,
     color: COLORS.PRIMARILY,
     fontFamily: 'KoHo-Medium',
-  },
-  movieCard: {
-    marginRight: 15,
-    position: 'relative',
-    width: 150,
-    height: 200,
-  },
-  movieImage: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 10,
-  },
-  ratingBadge: {
-    position: 'absolute',
-    top: 8,
-    left: 8,
-    backgroundColor: COLORS.PRIMARILY,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 2,
-  },
-  ratingText: {
-    color: '#fff',
-    fontSize: 12,
-    fontFamily: 'KoHo-Regular',
   },
 });
 
