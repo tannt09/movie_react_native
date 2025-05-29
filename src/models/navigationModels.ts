@@ -7,4 +7,7 @@ export type RootStackParamList = {
   MyListScreen: undefined;
   DownloadScreen: undefined;
   ProfileScreen: undefined;
+  SeeAllScreen: {
+    title: string;
+  };
 };

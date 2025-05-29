@@ -1,5 +1,5 @@
 // LIB
-import {Image, ScrollView, Text, View} from 'react-native';
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
@@ -10,16 +10,22 @@ import ItemMovie from '../common/ItemMovie';
 interface HorizontalMoviesProp {
   movies: MovieDetailModel[];
   title: string;
-  onPress: () => void
+  onPress: () => void;
 }
 
-const HorizontalMovies: React.FC<HorizontalMoviesProp> = ({movies, title, onPress}) => {
+const HorizontalMovies: React.FC<HorizontalMoviesProp> = ({
+  movies,
+  title,
+  onPress,
+}) => {
   return (
     <>
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>{title}</Text>
-          <Text style={styles.seeAll}>See all</Text>
+          <TouchableOpacity onPress={onPress}>
+            <Text style={styles.seeAll}>See all</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <ScrollView

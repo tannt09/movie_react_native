@@ -38,3 +38,9 @@ export function reset<T extends keyof RootStackParamList>(
     });
   }
 }
+
+export function goBack() {
+  if (navigationRef.isReady() && navigationRef.canGoBack()) {
+    navigationRef.goBack();
+  }
+}

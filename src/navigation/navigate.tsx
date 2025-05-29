@@ -11,6 +11,7 @@ import ExploreScreen from '@/screens/Explore/ExploreScreen';
 import MyListScreen from '@/screens/MyList/HomeScreen';
 import DownloadScreen from '@/screens/Downloads/DownloadScreen';
 import ProfileScreen from '@/screens/Profile/ProfileScreen';
+import SeeAllScreen from '@/screens/SeeAll/SeeAllScreen';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ const Navigate = () => {
       <Stack.Screen name="MyListScreen" component={MyListScreen} />
       <Stack.Screen name="DownloadScreen" component={DownloadScreen} />
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="SeeAllScreen" component={SeeAllScreen} />
     </Stack.Navigator>
   );
 };
