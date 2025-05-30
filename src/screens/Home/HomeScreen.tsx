@@ -12,10 +12,15 @@ import {COLORS} from '@constants/colors';
 import useHomeLogic from './Home.logic';
 import {navigate} from '@/navigation/navigationService';
 import HorizontalMovies from '@/components/home/HorizontalMovies';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const HomeScreen = () => {
   const {
-    isLoading,
+    isLoadingDetail,
+    isLoadingNowPlayMovies,
+    isLoadingTopRatedMovies,
+    isLoadingUpcomingMovies,
+    isLoadingPopularMovies,
     movieDetail,
     nowPlayMovies,
     topRatedMovies,
@@ -28,13 +33,19 @@ const HomeScreen = () => {
     <ScrollView style={styles.container}>
       {/* Poster */}
       <View style={styles.trailerContainer}>
-        <Image
-          source={{
-            uri: `http://image.tmdb.org/t/p/w500${movieDetail?.poster_path}`,
-          }}
-          style={styles.trailerImage}
-          resizeMode="cover"
-        />
+        {isLoadingDetail ? (
+          <SkeletonPlaceholder speed={1000}>
+            <SkeletonPlaceholder.Item width="100%" height="100%" />
+          </SkeletonPlaceholder>
+        ) : (
+          <Image
+            source={{
+              uri: `http://image.tmdb.org/t/p/w500${movieDetail?.poster_path}`,
+            }}
+            style={styles.trailerImage}
+            resizeMode="cover"
+          />
+        )}
         <View style={styles.titleIconContainer}>
           <Logo width={30} height={30} />
           <View style={{flex: 1}} />
@@ -43,8 +54,26 @@ const HomeScreen = () => {
           <Notification width={30} height={30} />
         </View>
         <View style={styles.overlay}>
-          <Text style={styles.title}>{movieDetail?.title ?? ''}</Text>
-          <Text style={styles.subtitle}>{getNameGenres()}</Text>
+          {isLoadingDetail ? (
+            <SkeletonPlaceholder speed={1200} backgroundColor="#dfdfdf">
+              <SkeletonPlaceholder.Item
+                width="100%"
+                height={30}
+                borderRadius={4}
+                marginBottom={10}
+              />
+              <SkeletonPlaceholder.Item
+                width="100%"
+                height={30}
+                borderRadius={4}
+              />
+            </SkeletonPlaceholder>
+          ) : (
+            <>
+              <Text style={styles.title}>{movieDetail?.title ?? ''}</Text>
+              <Text style={styles.subtitle}>{getNameGenres()}</Text>
+            </>
+          )}
           <View style={styles.buttonRow}>
             <TouchableOpacity style={styles.playButton}>
               <Play width={20} height={20} />
@@ -61,40 +90,36 @@ const HomeScreen = () => {
       </View>
 
       {/* Now playing videos */}
-      {nowPlayMovies && (
-        <HorizontalMovies
-          movies={nowPlayMovies}
-          title={'Now playing'}
-          onPress={() => navigate('SeeAllScreen', {title: 'Now playing'})}
-        />
-      )}
+      <HorizontalMovies
+        movies={nowPlayMovies ?? []}
+        title={'Now playing'}
+        isLoading={isLoadingNowPlayMovies}
+        onPress={() => navigate('SeeAllScreen', {title: 'Now playing'})}
+      />
 
       {/* Top rate videos */}
-      {topRatedMovies && (
-        <HorizontalMovies
-          movies={topRatedMovies}
-          title={'Top rate'}
-          onPress={() => navigate('SeeAllScreen', {title: 'Top rate'})}
-        />
-      )}
+      <HorizontalMovies
+        movies={topRatedMovies ?? []}
+        title={'Top rate'}
+        isLoading={isLoadingTopRatedMovies}
+        onPress={() => navigate('SeeAllScreen', {title: 'Top rate'})}
+      />
 
       {/* Upcomming videos */}
-      {upcomingMovies && (
-        <HorizontalMovies
-          movies={upcomingMovies}
-          title={'Upcoming'}
-          onPress={() => navigate('SeeAllScreen', {title: 'Upcoming'})}
-        />
-      )}
+      <HorizontalMovies
+        movies={upcomingMovies ?? []}
+        title={'Upcoming'}
+        isLoading={isLoadingUpcomingMovies}
+        onPress={() => navigate('SeeAllScreen', {title: 'Upcoming'})}
+      />
 
       {/* Popular videos */}
-      {popularMovies && (
-        <HorizontalMovies
-          movies={popularMovies}
-          title={'Popular'}
-          onPress={() => navigate('SeeAllScreen', {title: 'Popular'})}
-        />
-      )}
+      <HorizontalMovies
+        movies={popularMovies ?? []}
+        title={'Popular'}
+        isLoading={isLoadingPopularMovies}
+        onPress={() => navigate('SeeAllScreen', {title: 'Popular'})}
+      />
     </ScrollView>
   );
 };

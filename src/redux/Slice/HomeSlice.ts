@@ -6,18 +6,29 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {getMovieDetail, getMovies} from '@/api/home';
 import {MovieDetailModel} from '@/models/homeModels';
 
+const delay = (ms: number) =>
+  new Promise<void>(resolve => setTimeout(resolve, ms));
+
 interface HomeState {
   movieDetail?: MovieDetailModel;
   nowPlayMovies?: MovieDetailModel[];
   topRatedMovies?: MovieDetailModel[];
   upcomingMovies?: MovieDetailModel[];
   popularMovies?: MovieDetailModel[];
-  isLoading: boolean;
+  isLoadingDetail: boolean;
+  isLoadingNowPlayMovies: boolean;
+  isLoadingTopRatedMovies: boolean;
+  isLoadingUpcomingMovies: boolean;
+  isLoadingPopularMovies: boolean;
   error?: string;
 }
 
 const initialState: HomeState = {
-  isLoading: false,
+  isLoadingDetail: false,
+  isLoadingNowPlayMovies: false,
+  isLoadingTopRatedMovies: false,
+  isLoadingUpcomingMovies: false,
+  isLoadingPopularMovies: false,
 };
 
 export const fetchMovieDetail = createAsyncThunk(
@@ -53,40 +64,65 @@ const homeSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchMovieDetail.pending, state => {
-        state.isLoading = true;
+        state.isLoadingDetail = true;
       })
       .addCase(fetchMovieDetail.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingDetail = false;
         state.movieDetail = action.payload;
       })
       .addCase(fetchMovieDetail.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingDetail = false;
         state.error = action.error.toString();
       })
-      .addCase(fetchMovies.pending, state => {
-        state.isLoading = true;
-      })
-      .addCase(fetchMovies.fulfilled, (state, action) => {
-        state.isLoading = false;
+      .addCase(fetchMovies.pending, (state, action) => {
         switch (action.meta.arg.endpoint) {
           case 'now_playing':
-            state.nowPlayMovies = action.payload?.results;
+            state.isLoadingNowPlayMovies = true;
             break;
           case 'top_rated':
-            state.topRatedMovies = action.payload?.results;
+            state.isLoadingTopRatedMovies = true;
             break;
           case 'upcoming':
-            state.upcomingMovies = action.payload?.results;
+            state.isLoadingUpcomingMovies = true;
             break;
           case 'popular':
-            state.popularMovies = action.payload?.results;
+            state.isLoadingPopularMovies = true;
             break;
           default:
             console.log('No action matched. ');
         }
       })
+      .addCase(fetchMovies.fulfilled, (state, action) => {
+        switch (action.meta.arg.endpoint) {
+          case 'now_playing':
+            state.nowPlayMovies = action.payload?.results;
+            state.isLoadingNowPlayMovies = false;
+            break;
+          case 'top_rated':
+            state.topRatedMovies = action.payload?.results;
+            state.isLoadingTopRatedMovies = false;
+            break;
+          case 'upcoming':
+            state.upcomingMovies = action.payload?.results;
+            state.isLoadingUpcomingMovies = false;
+            break;
+          case 'popular':
+            state.popularMovies = action.payload?.results;
+            state.isLoadingPopularMovies = false;
+            break;
+          default:
+            state.isLoadingNowPlayMovies = false;
+            state.isLoadingTopRatedMovies = false;
+            state.isLoadingUpcomingMovies = false;
+            state.isLoadingPopularMovies = false;
+            console.log('No action matched. ');
+        }
+      })
       .addCase(fetchMovies.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoadingNowPlayMovies = false;
+        state.isLoadingTopRatedMovies = false;
+        state.isLoadingUpcomingMovies = false;
+        state.isLoadingPopularMovies = false;
         state.error = action.error.toString();
       });
   },

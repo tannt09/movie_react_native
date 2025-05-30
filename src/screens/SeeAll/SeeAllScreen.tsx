@@ -1,12 +1,11 @@
 // LIB
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   Dimensions,
   FlatList,
   SafeAreaView,
   StatusBar,
   Text,
-  Touchable,
   TouchableOpacity,
   View,
 } from 'react-native';

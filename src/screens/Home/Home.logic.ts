@@ -8,7 +8,11 @@ import {fetchMovieDetail, fetchMovies} from '@redux/Slice/HomeSlice';
 
 const useHomeLogic = () => {
   const {
-    isLoading,
+    isLoadingDetail,
+    isLoadingNowPlayMovies,
+    isLoadingTopRatedMovies,
+    isLoadingUpcomingMovies,
+    isLoadingPopularMovies,
     movieDetail,
     nowPlayMovies,
     topRatedMovies,
@@ -43,7 +47,11 @@ const useHomeLogic = () => {
   };
 
   return {
-    isLoading,
+    isLoadingDetail,
+    isLoadingNowPlayMovies,
+    isLoadingTopRatedMovies,
+    isLoadingUpcomingMovies,
+    isLoadingPopularMovies,
     movieDetail,
     nowPlayMovies,
     topRatedMovies,

@@ -1,6 +1,7 @@
 // LIB
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 // IMPORT
 import {COLORS} from '@/constants/colors';
@@ -10,12 +11,16 @@ import ItemMovie from '../common/ItemMovie';
 interface HorizontalMoviesProp {
   movies: MovieDetailModel[];
   title: string;
+  isLoading: boolean;
   onPress: () => void;
 }
+
+const arr = Array(4).fill(undefined);
 
 const HorizontalMovies: React.FC<HorizontalMoviesProp> = ({
   movies,
   title,
+  isLoading,
   onPress,
 }) => {
   return (
@@ -28,18 +33,36 @@ const HorizontalMovies: React.FC<HorizontalMoviesProp> = ({
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{marginHorizontal: 20}}>
-        {movies.map((movie, index) => {
-          return (
-            <View key={index} style={{marginEnd: 16}}>
-              <ItemMovie movie={movie} />
-            </View>
-          );
-        })}
-      </ScrollView>
+      {isLoading ? (
+        <SkeletonPlaceholder speed={1000}>
+          <View style={styles.skeletonContainer}>
+            {arr.map((_, index) => {
+              return (
+                <SkeletonPlaceholder.Item
+                  key={index}
+                  width={150}
+                  height={200}
+                  borderRadius={10}
+                  style={styles.itemSkeletonContainer}
+                />
+              );
+            })}
+          </View>
+        </SkeletonPlaceholder>
+      ) : (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{marginHorizontal: 20}}>
+          {movies.map((movie, index) => {
+            return (
+              <View key={index} style={{marginEnd: 16}}>
+                <ItemMovie movie={movie} />
+              </View>
+            );
+          })}
+        </ScrollView>
+      )}
     </>
   );
 };
@@ -63,6 +86,8 @@ const styles = ScaledSheet.create({
     color: COLORS.PRIMARILY,
     fontFamily: 'KoHo-Medium',
   },
+  skeletonContainer: {flexDirection: 'row', marginStart: 20},
+  itemSkeletonContainer: {marginEnd: 20},
 });
 
 export default HorizontalMovies;
