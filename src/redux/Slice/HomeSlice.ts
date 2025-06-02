@@ -3,7 +3,7 @@ import {Alert} from 'react-native';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 // IMPORT
-import {getMovieDetail, getMovies} from '@/api/home';
+import {getMovieDetailApi, getMoviesApi} from '@/api/home';
 import {MovieDetailModel} from '@/models/homeModels';
 
 const delay = (ms: number) =>
@@ -31,11 +31,42 @@ const initialState: HomeState = {
   isLoadingPopularMovies: false,
 };
 
+type EndpointType = 'now_playing' | 'top_rated' | 'upcoming' | 'popular';
+
+const movieKeyMap: Record<
+  EndpointType,
+  keyof Pick<
+    HomeState,
+    'nowPlayMovies' | 'topRatedMovies' | 'upcomingMovies' | 'popularMovies'
+  >
+> = {
+  now_playing: 'nowPlayMovies',
+  top_rated: 'topRatedMovies',
+  upcoming: 'upcomingMovies',
+  popular: 'popularMovies',
+};
+
+const loadingKeyMap: Record<
+  EndpointType,
+  keyof Pick<
+    HomeState,
+    | 'isLoadingNowPlayMovies'
+    | 'isLoadingTopRatedMovies'
+    | 'isLoadingUpcomingMovies'
+    | 'isLoadingPopularMovies'
+  >
+> = {
+  now_playing: 'isLoadingNowPlayMovies',
+  top_rated: 'isLoadingTopRatedMovies',
+  upcoming: 'isLoadingUpcomingMovies',
+  popular: 'isLoadingPopularMovies',
+};
+
 export const fetchMovieDetail = createAsyncThunk(
   'getMovieDetail',
   async (id: number) => {
     try {
-      const movie = await getMovieDetail({id});
+      const movie = await getMovieDetailApi({id});
 
       return movie;
     } catch (err) {
@@ -46,9 +77,21 @@ export const fetchMovieDetail = createAsyncThunk(
 
 export const fetchMovies = createAsyncThunk(
   'getMovies',
-  async ({page, endpoint}: {page: number; endpoint: string}) => {
+  async ({
+    page,
+    endpoint,
+    handleLoadMore,
+  }: {
+    page: number;
+    endpoint: string;
+    handleLoadMore?: () => void;
+  }) => {
     try {
-      const movies = await getMovies({page, endpoint});
+      const movies = await getMoviesApi({page, endpoint});
+
+      if (handleLoadMore) {
+        handleLoadMore();
+      }
 
       return movies;
     } catch (err) {
@@ -75,54 +118,34 @@ const homeSlice = createSlice({
         state.error = action.error.toString();
       })
       .addCase(fetchMovies.pending, (state, action) => {
-        switch (action.meta.arg.endpoint) {
-          case 'now_playing':
-            state.isLoadingNowPlayMovies = true;
-            break;
-          case 'top_rated':
-            state.isLoadingTopRatedMovies = true;
-            break;
-          case 'upcoming':
-            state.isLoadingUpcomingMovies = true;
-            break;
-          case 'popular':
-            state.isLoadingPopularMovies = true;
-            break;
-          default:
-            console.log('No action matched. ');
-        }
+        const {endpoint} = action.meta.arg;
+        const loadingKey = loadingKeyMap[endpoint as EndpointType];
+
+        state[loadingKey] = true;
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
-        switch (action.meta.arg.endpoint) {
-          case 'now_playing':
-            state.nowPlayMovies = action.payload?.results;
-            state.isLoadingNowPlayMovies = false;
-            break;
-          case 'top_rated':
-            state.topRatedMovies = action.payload?.results;
-            state.isLoadingTopRatedMovies = false;
-            break;
-          case 'upcoming':
-            state.upcomingMovies = action.payload?.results;
-            state.isLoadingUpcomingMovies = false;
-            break;
-          case 'popular':
-            state.popularMovies = action.payload?.results;
-            state.isLoadingPopularMovies = false;
-            break;
-          default:
-            state.isLoadingNowPlayMovies = false;
-            state.isLoadingTopRatedMovies = false;
-            state.isLoadingUpcomingMovies = false;
-            state.isLoadingPopularMovies = false;
-            console.log('No action matched. ');
+        const checkLoadMore = action.meta.arg.page > 1 ? true : false;
+        const {endpoint} = action.meta.arg;
+
+        const movieKey = movieKeyMap[endpoint as EndpointType];
+        const loadingKey = loadingKeyMap[endpoint as EndpointType];
+
+        if (action.payload) {
+          if (checkLoadMore) {
+            const movieList = state[movieKey] as MovieDetailModel[];
+            movieList.push(...action.payload.results);
+          } else {
+            state[movieKey] = action.payload.results;
+          }
         }
+
+        state[loadingKey] = false;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
-        state.isLoadingNowPlayMovies = false;
-        state.isLoadingTopRatedMovies = false;
-        state.isLoadingUpcomingMovies = false;
-        state.isLoadingPopularMovies = false;
+        const {endpoint} = action.meta.arg;
+        const loadingKey = loadingKeyMap[endpoint as EndpointType];
+
+        state[loadingKey] = false;
         state.error = action.error.toString();
       });
   },
