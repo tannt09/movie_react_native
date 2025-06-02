@@ -1,6 +1,7 @@
 // LIB
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {
+  ActivityIndicator,
   Dimensions,
   FlatList,
   SafeAreaView,
@@ -11,14 +12,16 @@ import {
 } from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 // IMPORT
 import ItemMovie from '@/components/common/ItemMovie';
-import {RootState} from '@/redux/store';
+import {AppDispatch, RootState} from '@/redux/store';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '@/models/navigationModels';
 import {goBack} from '@/navigation/navigationService';
+import {fetchMovies} from '@/redux/Slice/HomeSlice';
+import {MovieDetailModel} from '@/models/homeModels';
 
 type SeeAllRouteProp = RouteProp<RootStackParamList, 'SeeAllScreen'>;
 
@@ -26,26 +29,78 @@ const {width} = Dimensions.get('window');
 const ITEM_WIDTH = (width - 50) / 2;
 
 const SeeAllScreen = () => {
-  const {nowPlayMovies, topRatedMovies, upcomingMovies, popularMovies} =
-    useSelector((state: RootState) => state.home);
+  const {
+    nowPlayMovies,
+    topRatedMovies,
+    upcomingMovies,
+    popularMovies,
+    isLoadingNowPlayMovies,
+    isLoadingTopRatedMovies,
+    isLoadingUpcomingMovies,
+    isLoadingPopularMovies,
+  } = useSelector((state: RootState) => state.home);
 
   const route = useRoute<SeeAllRouteProp>();
-  const {title} = route.params;
+  const {title, endpoint} = route.params;
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [page, setPage] = useState(2);
 
   const chooseData = () => {
-    switch (title) {
-      case 'Now playing':
-        return nowPlayMovies ?? [];
-      case 'Top rate':
-        return topRatedMovies ?? [];
-      case 'Upcoming':
-        return upcomingMovies ?? [];
-      case 'Popular':
-        return popularMovies ?? [];
+    switch (endpoint) {
+      case 'now_playing':
+        return {movies: nowPlayMovies ?? [], loading: isLoadingNowPlayMovies};
+      case 'top_rated':
+        return {movies: topRatedMovies ?? [], loading: isLoadingTopRatedMovies};
+      case 'upcoming':
+        return {movies: upcomingMovies ?? [], loading: isLoadingUpcomingMovies};
+      case 'popular':
+        return {movies: popularMovies ?? [], loading: isLoadingPopularMovies};
       default:
-        return [];
+        return {movies: [], loading: false};
     }
   };
+
+  const getMoreMovies = (page: number, endpoint: string) => {
+    if (chooseData().loading) return;
+    dispatch(
+      fetchMovies({
+        page,
+        endpoint,
+        handleLoadMore: () => setPage(prev => prev + 1),
+      }),
+    );
+  };
+
+  const handleLoadMore = () => {
+    getMoreMovies(page, endpoint);
+  };
+
+  const renderFooter = () => {
+    if (!chooseData().loading) return null;
+    return (
+      <View style={{paddingVertical: 20}}>
+        <ActivityIndicator size="small" color="#999" />
+      </View>
+    );
+  };
+
+  const renderItem = useCallback(
+    ({item, index}: {item: MovieDetailModel; index: number}) => {
+      const itemStyle =
+        index % 2 === 0
+          ? [styles.itemContainer, styles.itemMarginRight]
+          : [styles.itemContainer, styles.itemMarginLeft];
+
+      return (
+        <View style={itemStyle}>
+          <ItemMovie movie={item} width={ITEM_WIDTH} />
+        </View>
+      );
+    },
+    [],
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -57,21 +112,21 @@ const SeeAllScreen = () => {
         <Text style={styles.titleText}>{title}</Text>
       </View>
       <FlatList
-        data={chooseData()}
+        data={chooseData().movies}
         numColumns={2}
         keyExtractor={item => item.id.toString()}
-        renderItem={({item, index}) => (
-          <View
-            style={[
-              styles.itemContainer,
-              index % 2 === 0 ? {marginEnd: 8} : {marginStart: 8},
-            ]}>
-            <ItemMovie movie={item} width={ITEM_WIDTH} />
-          </View>
-        )}
+        renderItem={renderItem}
         contentContainerStyle={styles.listContent}
         style={styles.listStyle}
         showsVerticalScrollIndicator={false}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.3}
+        ListFooterComponent={renderFooter}
+        // 🔥 Performance Props
+        removeClippedSubviews={true}
+        initialNumToRender={10}
+        maxToRenderPerBatch={10}
+        windowSize={7}
       />
     </SafeAreaView>
   );
@@ -93,6 +148,12 @@ const styles = ScaledSheet.create({
   listStyle: {marginTop: 10, alignSelf: 'center'},
   itemContainer: {
     marginBottom: 16,
+  },
+  itemMarginRight: {
+    marginEnd: 8,
+  },
+  itemMarginLeft: {
+    marginStart: 8,
   },
 });
 

@@ -1,33 +1,37 @@
 // LIB
 import React from 'react';
-import {Image, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
 import {COLORS} from '@/constants/colors';
 import {MovieDetailModel} from '@/models/homeModels';
+import FastImage from 'react-native-fast-image';
 
 interface ItemMovieProp {
   movie: MovieDetailModel;
   width?: number;
 }
 
-const ItemMovie: React.FC<ItemMovieProp> = ({movie, width = 150}) => {
-  return (
-    <View style={[styles.movieCard, {width}]}>
-      <Image
-        source={{
-          uri: `http://image.tmdb.org/t/p/w500${movie.poster_path}`,
-        }}
-        style={styles.movieImage}
-        resizeMode="cover"
-      />
-      <View style={styles.ratingBadge}>
-        <Text style={styles.ratingText}>{movie.vote_average.toFixed(1)}</Text>
+const ItemMovie: React.FC<ItemMovieProp> = React.memo(
+  ({movie, width = 150}) => {
+    return (
+      <View style={[styles.movieCard, {width}]}>
+        <FastImage
+          source={{
+            uri: `http://image.tmdb.org/t/p/w500${movie.poster_path}`,
+            priority: FastImage.priority.normal,
+          }}
+          style={styles.movieImage}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        <View style={styles.ratingBadge}>
+          <Text style={styles.ratingText}>{movie.vote_average.toFixed(1)}</Text>
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  },
+);
 
 const styles = ScaledSheet.create({
   movieCard: {

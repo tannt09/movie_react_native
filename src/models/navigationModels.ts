@@ -9,5 +9,6 @@ export type RootStackParamList = {
   ProfileScreen: undefined;
   SeeAllScreen: {
     title: string;
+    endpoint: string;
   };
 };

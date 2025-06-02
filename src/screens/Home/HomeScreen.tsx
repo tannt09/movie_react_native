@@ -2,6 +2,7 @@
 import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ScaledSheet} from 'react-native-size-matters';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 // IMPORT
 import Play from '@assets/icons/ic_play.svg';
@@ -12,7 +13,6 @@ import {COLORS} from '@constants/colors';
 import useHomeLogic from './Home.logic';
 import {navigate} from '@/navigation/navigationService';
 import HorizontalMovies from '@/components/home/HorizontalMovies';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 const HomeScreen = () => {
   const {
@@ -94,7 +94,12 @@ const HomeScreen = () => {
         movies={nowPlayMovies ?? []}
         title={'Now playing'}
         isLoading={isLoadingNowPlayMovies}
-        onPress={() => navigate('SeeAllScreen', {title: 'Now playing'})}
+        onPress={() =>
+          navigate('SeeAllScreen', {
+            title: 'Now playing',
+            endpoint: 'now_playing',
+          })
+        }
       />
 
       {/* Top rate videos */}
@@ -102,7 +107,9 @@ const HomeScreen = () => {
         movies={topRatedMovies ?? []}
         title={'Top rate'}
         isLoading={isLoadingTopRatedMovies}
-        onPress={() => navigate('SeeAllScreen', {title: 'Top rate'})}
+        onPress={() =>
+          navigate('SeeAllScreen', {title: 'Top rate', endpoint: 'top_rated'})
+        }
       />
 
       {/* Upcomming videos */}
@@ -110,7 +117,9 @@ const HomeScreen = () => {
         movies={upcomingMovies ?? []}
         title={'Upcoming'}
         isLoading={isLoadingUpcomingMovies}
-        onPress={() => navigate('SeeAllScreen', {title: 'Upcoming'})}
+        onPress={() =>
+          navigate('SeeAllScreen', {title: 'Upcoming', endpoint: 'upcoming'})
+        }
       />
 
       {/* Popular videos */}
@@ -118,7 +127,9 @@ const HomeScreen = () => {
         movies={popularMovies ?? []}
         title={'Popular'}
         isLoading={isLoadingPopularMovies}
-        onPress={() => navigate('SeeAllScreen', {title: 'Popular'})}
+        onPress={() =>
+          navigate('SeeAllScreen', {title: 'Popular', endpoint: 'popular'})
+        }
       />
     </ScrollView>
   );

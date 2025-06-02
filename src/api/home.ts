@@ -3,7 +3,7 @@ import {MovieListResponseModel} from '@/models/homeModels';
 import api from '@/services/axiosConfig';
 import {handleResponse} from '@/utils/handleResponse';
 
-export const getMovieDetail = async ({id}: {id: number}) => {
+export const getMovieDetailApi = async ({id}: {id: number}) => {
   try {
     const response = await api.get(`/movie/${id}`, {
       params: {
@@ -19,7 +19,7 @@ export const getMovieDetail = async ({id}: {id: number}) => {
   }
 };
 
-export const getMovies = async ({
+export const getMoviesApi = async ({
   page,
   endpoint,
 }: {
