@@ -1,5 +1,5 @@
 // LIB
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -12,16 +12,14 @@ import {
 } from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useDispatch, useSelector} from 'react-redux';
 
 // IMPORT
 import ItemMovie from '@/components/common/ItemMovie';
-import {AppDispatch, RootState} from '@/redux/store';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '@/models/navigationModels';
 import {goBack} from '@/navigation/navigationService';
-import {fetchMovies} from '@/redux/Slice/HomeSlice';
 import {MovieDetailModel} from '@/models/homeModels';
+import useSeeAllLogic from './SeeAll.logic';
 
 type SeeAllRouteProp = RouteProp<RootStackParamList, 'SeeAllScreen'>;
 
@@ -29,53 +27,10 @@ const {width} = Dimensions.get('window');
 const ITEM_WIDTH = (width - 50) / 2;
 
 const SeeAllScreen = () => {
-  const {
-    nowPlayMovies,
-    topRatedMovies,
-    upcomingMovies,
-    popularMovies,
-    isLoadingNowPlayMovies,
-    isLoadingTopRatedMovies,
-    isLoadingUpcomingMovies,
-    isLoadingPopularMovies,
-  } = useSelector((state: RootState) => state.home);
-
   const route = useRoute<SeeAllRouteProp>();
   const {title, endpoint} = route.params;
 
-  const dispatch = useDispatch<AppDispatch>();
-
-  const [page, setPage] = useState(2);
-
-  const chooseData = () => {
-    switch (endpoint) {
-      case 'now_playing':
-        return {movies: nowPlayMovies ?? [], loading: isLoadingNowPlayMovies};
-      case 'top_rated':
-        return {movies: topRatedMovies ?? [], loading: isLoadingTopRatedMovies};
-      case 'upcoming':
-        return {movies: upcomingMovies ?? [], loading: isLoadingUpcomingMovies};
-      case 'popular':
-        return {movies: popularMovies ?? [], loading: isLoadingPopularMovies};
-      default:
-        return {movies: [], loading: false};
-    }
-  };
-
-  const getMoreMovies = (page: number, endpoint: string) => {
-    if (chooseData().loading) return;
-    dispatch(
-      fetchMovies({
-        page,
-        endpoint,
-        handleLoadMore: () => setPage(prev => prev + 1),
-      }),
-    );
-  };
-
-  const handleLoadMore = () => {
-    getMoreMovies(page, endpoint);
-  };
+  const {chooseData, handleLoadMore} = useSeeAllLogic(endpoint);
 
   const renderFooter = () => {
     if (!chooseData().loading) return null;
