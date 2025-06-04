@@ -5,21 +5,21 @@ import {
   Dimensions,
   FlatList,
   SafeAreaView,
-  StatusBar,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ScaledSheet} from 'react-native-size-matters';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {
+  moderateScale,
+  ScaledSheet,
+} from 'react-native-size-matters';
 
 // IMPORT
 import ItemMovie from '@/components/common/ItemMovie';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {RootStackParamList} from '@/models/navigationModels';
-import {goBack} from '@/navigation/navigationService';
 import {MovieDetailModel} from '@/models/homeModels';
 import useSeeAllLogic from './SeeAll.logic';
+import CustomHeader from '@/components/common/CustomHeader';
 
 type SeeAllRouteProp = RouteProp<RootStackParamList, 'SeeAllScreen'>;
 
@@ -59,13 +59,10 @@ const SeeAllScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
-      <View style={styles.titleRow}>
-        <TouchableOpacity onPress={() => goBack()}>
-          <Ionicons name={'arrow-back'} size={26} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.titleText}>{title}</Text>
-      </View>
+      <CustomHeader
+        title={title}
+        textProp={{paddingStart: moderateScale(30)}}
+      />
       <FlatList
         data={chooseData().movies}
         numColumns={2}
@@ -94,8 +91,6 @@ const styles = ScaledSheet.create({
     paddingHorizontal: 10,
     paddingTop: 30,
   },
-  titleText: {fontFamily: 'KoHo-Bold', fontSize: 25, marginLeft: 30},
-  titleRow: {flexDirection: 'row', alignItems: 'center'},
   listContent: {
     paddingVertical: 10,
     marginTop: 10,

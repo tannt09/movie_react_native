@@ -27,6 +27,7 @@ const HomeScreen = () => {
     upcomingMovies,
     popularMovies,
     getNameGenres,
+    handlePlayVideo,
   } = useHomeLogic();
 
   return (
@@ -75,7 +76,7 @@ const HomeScreen = () => {
             </>
           )}
           <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.playButton}>
+            <TouchableOpacity style={styles.playButton} onPress={handlePlayVideo}>
               <Play width={20} height={20} />
               <View style={{width: 10}} />
               <Text style={styles.playButtonText}>Play</Text>

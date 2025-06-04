@@ -9,11 +9,11 @@ import {
   View,
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
-import { ScaledSheet } from 'react-native-size-matters';
+import {ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
-import { COLORS } from '@constants/colors';
-import {navigate} from '@/navigation/navigationService';
+import {COLORS} from '@constants/colors';
+import {navigate, reset} from '@/navigation/navigationService';
 
 type ItemType = {
   id: string;
@@ -47,6 +47,10 @@ const WellcomeScreen = () => {
     navigate('LoginScreen');
   };
 
+  const handleClickStart = () => {
+    reset('BottomTabs');
+  };
+
   return (
     <ImageBackground
       source={require('@assets/images/bg_welcome.png')}
@@ -78,7 +82,7 @@ const WellcomeScreen = () => {
         })}
       </View>
 
-      <TouchableOpacity style={styles.outlineButton}>
+      <TouchableOpacity style={styles.outlineButton} onPress={handleClickStart}>
         <Text style={styles.outlineText}>Get Started</Text>
       </TouchableOpacity>
 

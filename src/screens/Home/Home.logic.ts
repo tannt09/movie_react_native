@@ -1,10 +1,12 @@
 // LIB
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 //IMPORT
 import {AppDispatch, RootState} from '@redux/store';
 import {fetchMovieDetail, fetchMovies} from '@redux/Slice/HomeSlice';
+import {navigate} from '@/navigation/navigationService';
+import {fetchTrailerVideo} from '@/redux/Slice/VideoSlice';
 
 const useHomeLogic = () => {
   const {
@@ -19,6 +21,7 @@ const useHomeLogic = () => {
     upcomingMovies,
     popularMovies,
   } = useSelector((state: RootState) => state.home);
+
   const dispatch = useDispatch<AppDispatch>();
 
   const getMovieDetail = () => {
@@ -27,6 +30,7 @@ const useHomeLogic = () => {
     const randomId = ids[index];
 
     dispatch(fetchMovieDetail(randomId));
+    dispatch(fetchTrailerVideo({id: randomId}));
   };
 
   const getMovies = (page: number, endpoint: string) => {
@@ -46,6 +50,10 @@ const useHomeLogic = () => {
     return movieDetail.genres.map(item => item.name).join(', ');
   };
 
+  const handlePlayVideo = () => {
+    navigate('WatchTrailersScreen')
+  };
+
   return {
     isLoadingDetail,
     isLoadingNowPlayMovies,
@@ -58,6 +66,7 @@ const useHomeLogic = () => {
     upcomingMovies,
     popularMovies,
     getNameGenres,
+    handlePlayVideo,
   };
 };
 
