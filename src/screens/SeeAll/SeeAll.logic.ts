@@ -8,6 +8,7 @@ import {fetchMovies} from '@/redux/Slice/HomeSlice';
 
 const useSeeAllLogic = (endpoint: string) => {
   const {
+    totalPage,
     nowPlayMovies,
     topRatedMovies,
     upcomingMovies,
@@ -38,7 +39,7 @@ const useSeeAllLogic = (endpoint: string) => {
   };
 
   const getMoreMovies = (page: number, endpoint: string) => {
-    if (chooseData().loading) return;
+    if (chooseData().loading || page > totalPage) return;
     dispatch(
       fetchMovies({
         page,

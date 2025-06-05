@@ -21,6 +21,7 @@ interface HomeState {
   isLoadingUpcomingMovies: boolean;
   isLoadingPopularMovies: boolean;
   error?: string;
+  totalPage: number;
 }
 
 const initialState: HomeState = {
@@ -29,6 +30,7 @@ const initialState: HomeState = {
   isLoadingTopRatedMovies: false,
   isLoadingUpcomingMovies: false,
   isLoadingPopularMovies: false,
+  totalPage: 1,
 };
 
 type EndpointType = 'now_playing' | 'top_rated' | 'upcoming' | 'popular';
@@ -89,10 +91,6 @@ export const fetchMovies = createAsyncThunk(
     try {
       const movies = await getMoviesApi({page, endpoint});
 
-      if (handleLoadMore) {
-        handleLoadMore();
-      }
-
       return movies;
     } catch (err) {
       Alert.alert('Unable to load now play movies ', `${err}`);
@@ -124,19 +122,23 @@ const homeSlice = createSlice({
         state[loadingKey] = true;
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
-        const checkLoadMore = action.meta.arg.page > 1 ? true : false;
-        const {endpoint} = action.meta.arg;
+        const {page, endpoint, handleLoadMore} = action.meta.arg;
+        const checkLoadMore = page > 1 ? true : false;
 
         const movieKey = movieKeyMap[endpoint as EndpointType];
         const loadingKey = loadingKeyMap[endpoint as EndpointType];
 
         if (action.payload) {
+          if (handleLoadMore) {
+            handleLoadMore();
+          }
           if (checkLoadMore) {
             const movieList = state[movieKey] as MovieDetailModel[];
             movieList.push(...action.payload.results);
           } else {
             state[movieKey] = action.payload.results;
           }
+          state.totalPage = action.payload.total_pages;
         }
 
         state[loadingKey] = false;
