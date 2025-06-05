@@ -1,28 +1,61 @@
 // LIB
-import {useCallback, useEffect} from 'react';
-import {Dimensions, FlatList, ScrollView, Text, View} from 'react-native';
+import {useCallback, useEffect, useState} from 'react';
+import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  SafeAreaView,
+  View,
+} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 import {useDispatch, useSelector} from 'react-redux';
 
 // IMPORT
 import CustomHeader from '@/components/common/CustomHeader';
 import {AppDispatch, RootState} from '@/redux/store';
-import {fetchTrendingVideos} from '@/redux/Slice/ExploreSlice';
 import {MovieDetailModel} from '@/models/homeModels';
 import ItemMovie from '@/components/common/ItemMovie';
+import {fetchSearchMovies} from '@/redux/Slice/ExploreSlice';
 
 const {width} = Dimensions.get('window');
 const ITEM_WIDTH = (width - 50) / 2;
 
 const ExploreScreen = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const {isLoading, exploreMovies} = useSelector(
+  const {isLoading, exploreMovies, totalPage} = useSelector(
     (state: RootState) => state.explore,
   );
 
+  const [page, setPage] = useState(1);
+  const [searchText, setSearchText] = useState('');
+
+  const getSearchMovies = (page: number, searchText: string) => {
+    if (isLoading || page > totalPage) return;
+    dispatch(
+      fetchSearchMovies({
+        page,
+        searchText,
+        handleLoadMore: () => setPage(prev => prev + 1),
+      }),
+    );
+  };
+
+  const handleLoadMore = () => {
+    getSearchMovies(page, searchText);
+  };
+
   useEffect(() => {
-    dispatch(fetchTrendingVideos());
+    getSearchMovies(page, searchText);
   }, []);
+
+  const renderFooter = () => {
+    if (!isLoading) return null;
+    return (
+      <View style={{paddingVertical: 20}}>
+        <ActivityIndicator size="small" color="#999" />
+      </View>
+    );
+  };
 
   const renderItem = useCallback(
     ({item, index}: {item: MovieDetailModel; index: number}) => {
@@ -40,8 +73,10 @@ const ExploreScreen = () => {
     [],
   );
 
+  console;
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <CustomHeader title="Explore" textProp={{alignItems: 'center'}} />
       <FlatList
         data={exploreMovies}
@@ -51,13 +86,16 @@ const ExploreScreen = () => {
         contentContainerStyle={styles.listContent}
         style={styles.listStyle}
         showsVerticalScrollIndicator={false}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.3}
+        ListFooterComponent={renderFooter}
         // 🔥 Performance Props
         removeClippedSubviews={true}
         initialNumToRender={10}
         maxToRenderPerBatch={10}
         windowSize={7}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -66,6 +104,7 @@ const styles = ScaledSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     paddingTop: 30,
+    paddingBottom: 40,
   },
   itemContainer: {
     marginBottom: 16,

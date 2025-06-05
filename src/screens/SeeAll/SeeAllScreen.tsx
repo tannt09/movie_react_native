@@ -5,7 +5,6 @@ import {
   Dimensions,
   FlatList,
   SafeAreaView,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {

@@ -123,7 +123,7 @@ const homeSlice = createSlice({
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         const {page, endpoint, handleLoadMore} = action.meta.arg;
-        const checkLoadMore = page > 1 ? true : false;
+        const isLoadMore = page > 1 ? true : false;
 
         const movieKey = movieKeyMap[endpoint as EndpointType];
         const loadingKey = loadingKeyMap[endpoint as EndpointType];
@@ -132,7 +132,7 @@ const homeSlice = createSlice({
           if (handleLoadMore) {
             handleLoadMore();
           }
-          if (checkLoadMore) {
+          if (isLoadMore) {
             const movieList = state[movieKey] as MovieDetailModel[];
             movieList.push(...action.payload.results);
           } else {

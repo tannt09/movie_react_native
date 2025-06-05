@@ -49,10 +49,11 @@ export interface MovieDetailModel {
   vote_average: number;
   vote_count: number;
   genre_ids: number[] | null;
+  media_type?: string;
 }
 
 export interface MovieListResponseModel {
-  dates: {
+  dates?: {
     maximum: string;
     minimum: string;
   };
