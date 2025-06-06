@@ -1,10 +1,11 @@
 // LIB
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
   FlatList,
   SafeAreaView,
+  TextInput,
   View,
 } from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
@@ -16,6 +17,7 @@ import {AppDispatch, RootState} from '@/redux/store';
 import {MovieDetailModel} from '@/models/homeModels';
 import ItemMovie from '@/components/common/ItemMovie';
 import {fetchSearchMovies} from '@/redux/Slice/ExploreSlice';
+import GridListSkeleton from '@/components/common/GridListSkeleton';
 
 const {width} = Dimensions.get('window');
 const ITEM_WIDTH = (width - 50) / 2;
@@ -28,6 +30,8 @@ const ExploreScreen = () => {
 
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState('');
+
+  const flatListRef = useRef<FlatList>(null);
 
   const getSearchMovies = (page: number, searchText: string) => {
     if (isLoading || page > totalPage) return;
@@ -44,9 +48,15 @@ const ExploreScreen = () => {
     getSearchMovies(page, searchText);
   };
 
+  const handleChangeSearchText = async (text: string) => {
+    setSearchText(text);
+    setPage(1);
+    flatListRef.current?.scrollToOffset({offset: 0, animated: false});
+  };
+
   useEffect(() => {
     getSearchMovies(page, searchText);
-  }, []);
+  }, [searchText]);
 
   const renderFooter = () => {
     if (!isLoading) return null;
@@ -73,28 +83,37 @@ const ExploreScreen = () => {
     [],
   );
 
-  console;
-
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader title="Explore" textProp={{alignItems: 'center'}} />
-      <FlatList
-        data={exploreMovies}
-        numColumns={2}
-        keyExtractor={item => item.id.toString()}
-        renderItem={renderItem}
-        contentContainerStyle={styles.listContent}
-        style={styles.listStyle}
-        showsVerticalScrollIndicator={false}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.3}
-        ListFooterComponent={renderFooter}
-        // 🔥 Performance Props
-        removeClippedSubviews={true}
-        initialNumToRender={10}
-        maxToRenderPerBatch={10}
-        windowSize={7}
+      <TextInput
+        style={styles.input}
+        placeholder="Search name..."
+        value={searchText}
+        onChangeText={handleChangeSearchText}
       />
+      {isLoading && exploreMovies.length === 0 ? (
+        <GridListSkeleton width={ITEM_WIDTH} />
+      ) : (
+        <FlatList
+          ref={flatListRef}
+          data={exploreMovies}
+          numColumns={2}
+          keyExtractor={item => item.id.toString()}
+          renderItem={renderItem}
+          contentContainerStyle={styles.listContent}
+          style={styles.listStyle}
+          showsVerticalScrollIndicator={false}
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.3}
+          ListFooterComponent={renderFooter}
+          // 🔥 Performance Props
+          removeClippedSubviews={true}
+          initialNumToRender={10}
+          maxToRenderPerBatch={10}
+          windowSize={7}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -117,8 +136,17 @@ const styles = ScaledSheet.create({
   },
   listStyle: {marginTop: 10, alignSelf: 'center'},
   listContent: {
-    paddingVertical: 10,
+    paddingBottom: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 10,
     marginTop: 10,
+    marginHorizontal: 10,
+    borderRadius: 10,
   },
 });
 

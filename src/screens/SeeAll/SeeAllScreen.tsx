@@ -7,10 +7,7 @@ import {
   SafeAreaView,
   View,
 } from 'react-native';
-import {
-  moderateScale,
-  ScaledSheet,
-} from 'react-native-size-matters';
+import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
 import ItemMovie from '@/components/common/ItemMovie';
@@ -92,7 +89,6 @@ const styles = ScaledSheet.create({
   },
   listContent: {
     paddingVertical: 10,
-    marginTop: 10,
   },
   listStyle: {marginTop: 10, alignSelf: 'center'},
   itemContainer: {
