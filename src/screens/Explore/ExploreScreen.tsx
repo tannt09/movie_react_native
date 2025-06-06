@@ -1,5 +1,5 @@
 // LIB
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -9,54 +9,26 @@ import {
   View,
 } from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
-import {useDispatch, useSelector} from 'react-redux';
 
 // IMPORT
 import CustomHeader from '@/components/common/CustomHeader';
-import {AppDispatch, RootState} from '@/redux/store';
 import {MovieDetailModel} from '@/models/homeModels';
 import ItemMovie from '@/components/common/ItemMovie';
-import {fetchSearchMovies} from '@/redux/Slice/ExploreSlice';
 import GridListSkeleton from '@/components/common/GridListSkeleton';
+import useExploreLogic from './Explore.logic';
 
 const {width} = Dimensions.get('window');
 const ITEM_WIDTH = (width - 50) / 2;
 
 const ExploreScreen = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const {isLoading, exploreMovies, totalPage} = useSelector(
-    (state: RootState) => state.explore,
-  );
-
-  const [page, setPage] = useState(1);
-  const [searchText, setSearchText] = useState('');
-
-  const flatListRef = useRef<FlatList>(null);
-
-  const getSearchMovies = (page: number, searchText: string) => {
-    if (isLoading || page > totalPage) return;
-    dispatch(
-      fetchSearchMovies({
-        page,
-        searchText,
-        handleLoadMore: () => setPage(prev => prev + 1),
-      }),
-    );
-  };
-
-  const handleLoadMore = () => {
-    getSearchMovies(page, searchText);
-  };
-
-  const handleChangeSearchText = async (text: string) => {
-    setSearchText(text);
-    setPage(1);
-    flatListRef.current?.scrollToOffset({offset: 0, animated: false});
-  };
-
-  useEffect(() => {
-    getSearchMovies(page, searchText);
-  }, [searchText]);
+  const {
+    flatListRef,
+    isLoading,
+    searchText,
+    exploreMovies,
+    handleChangeSearchText,
+    handleLoadMore,
+  } = useExploreLogic();
 
   const renderFooter = () => {
     if (!isLoading) return null;
