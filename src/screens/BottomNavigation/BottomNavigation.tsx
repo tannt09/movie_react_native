@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // IMPORT
 import HomeScreen from '../Home/HomeScreen';
 import ExploreScreen from '../Explore/ExploreScreen';
-import MyListScreen from '../MyList/HomeScreen';
+import MyListScreen from '../MyList/MyListScreen';
 import DownloadScreen from '../Downloads/DownloadScreen';
 import ProfileScreen from '../Profile/ProfileScreen';
 import HomeIcon from '@assets/icons/ic_tab_home.svg';

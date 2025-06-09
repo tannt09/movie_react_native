@@ -5,12 +5,14 @@ import {configureStore} from '@reduxjs/toolkit';
 import homeReducer from './Slice/HomeSlice';
 import videoReducer from './Slice/VideoSlice';
 import exploreReducer from './Slice/ExploreSlice';
+import myListReducer from './Slice/MyListSlice';
 
 const store = configureStore({
   reducer: {
     home: homeReducer,
     video: videoReducer,
     explore: exploreReducer,
+    myList: myListReducer,
   },
 });
 

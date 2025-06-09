@@ -8,7 +8,7 @@ import BottomTabs from '@/screens/BottomNavigation/BottomNavigation';
 import WellcomeScreen from '@/screens/Wellcome/WellcomeScreen';
 import HomeScreen from '@/screens/Home/HomeScreen';
 import ExploreScreen from '@/screens/Explore/ExploreScreen';
-import MyListScreen from '@/screens/MyList/HomeScreen';
+import MyListScreen from '@/screens/MyList/MyListScreen';
 import DownloadScreen from '@/screens/Downloads/DownloadScreen';
 import ProfileScreen from '@/screens/Profile/ProfileScreen';
 import SeeAllScreen from '@/screens/SeeAll/SeeAllScreen';
