@@ -11,6 +11,7 @@ interface MyListState {
   isLoading: boolean;
   movies: MovieDetailModel[];
   totalPage: number;
+  page: number;
   error?: string;
 }
 
@@ -18,21 +19,25 @@ const initialState: MyListState = {
   isLoading: false,
   movies: [],
   totalPage: 1,
+  page: 1,
 };
 
 export const fetchMyList = createAsyncThunk(
   'getMyList',
-  async ({
-    id,
-    page,
-    handleLoadMore,
-  }: {
-    id: number;
-    page: number;
-    handleLoadMore: () => void;
-  }) => {
+  async (
+    {
+      id,
+      page,
+    }: {
+      id: number;
+      page: number;
+    },
+    {dispatch},
+  ) => {
     try {
       const videos = await getMyListApi({id, page});
+
+      dispatch(increasePageMyList());
 
       return videos;
     } catch (err) {
@@ -49,7 +54,8 @@ export const addMoviesThunk = createAsyncThunk(
 
       const results = response.results[0];
       if (results.success) {
-        dispatch(fetchMyList({id: data.id, page: 1, handleLoadMore: () => {}}));
+        dispatch(fetchMyList({id: data.id, page: 1}));
+        dispatch(resetPageMyList());
       }
 
       return response;
@@ -62,14 +68,21 @@ export const addMoviesThunk = createAsyncThunk(
 const myListSlice = createSlice({
   name: 'myList',
   initialState,
-  reducers: {},
+  reducers: {
+    increasePageMyList: state => {
+      state.page = state.page + 1;
+    },
+    resetPageMyList: state => {
+      state.page = 1;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchMyList.pending, state => {
         state.isLoading = true;
       })
       .addCase(fetchMyList.fulfilled, (state, action) => {
-        const {page, handleLoadMore} = action.meta.arg;
+        const {page} = action.meta.arg;
         const isLoadMore = page > 1 ? true : false;
 
         if (action.payload) {
@@ -79,7 +92,6 @@ const myListSlice = createSlice({
             state.movies = action.payload.items;
           }
 
-          handleLoadMore();
           state.totalPage = action.payload.total_pages;
         }
 
@@ -109,5 +121,7 @@ const myListSlice = createSlice({
       });
   },
 });
+
+export const {increasePageMyList, resetPageMyList} = myListSlice.actions;
 
 export default myListSlice.reducer;

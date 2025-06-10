@@ -1,5 +1,5 @@
 // LIB
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -21,13 +21,11 @@ const {width} = Dimensions.get('window');
 const ITEM_WIDTH = (width - 50) / 2;
 
 const MyListScreen = () => {
-  const {movies, isLoading, totalPage} = useSelector(
+  const {movies, isLoading, totalPage, page} = useSelector(
     (state: RootState) => state.myList,
   );
 
   const dispatch = useDispatch<AppDispatch>();
-
-  const [page, setPage] = useState(1);
 
   const getMyList = (id: number) => {
     if (isLoading || page > totalPage) return;
@@ -35,7 +33,6 @@ const MyListScreen = () => {
       fetchMyList({
         id: id,
         page: page,
-        handleLoadMore: () => setPage(prev => prev + 1),
       }),
     );
   };
