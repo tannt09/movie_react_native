@@ -7,17 +7,9 @@ import {AppDispatch, RootState} from '@/redux/store';
 import {fetchMovies} from '@/redux/Slice/HomeSlice';
 
 const useSeeAllLogic = (endpoint: string) => {
-  const {
-    totalPage,
-    nowPlayMovies,
-    topRatedMovies,
-    upcomingMovies,
-    popularMovies,
-    isLoadingNowPlayMovies,
-    isLoadingTopRatedMovies,
-    isLoadingUpcomingMovies,
-    isLoadingPopularMovies,
-  } = useSelector((state: RootState) => state.home);
+  const {totalPage, movies, isLoading} = useSelector(
+    (state: RootState) => state.home,
+  );
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -26,20 +18,36 @@ const useSeeAllLogic = (endpoint: string) => {
   const chooseData = () => {
     switch (endpoint) {
       case 'now_playing':
-        return {movies: nowPlayMovies ?? [], loading: isLoadingNowPlayMovies};
+        return {
+          movies: movies[0] ?? [],
+          loading: isLoading[0],
+          totalPage: totalPage[0],
+        };
       case 'top_rated':
-        return {movies: topRatedMovies ?? [], loading: isLoadingTopRatedMovies};
+        return {
+          movies: movies[1] ?? [],
+          loading: isLoading[1],
+          totalPage: totalPage[1],
+        };
       case 'upcoming':
-        return {movies: upcomingMovies ?? [], loading: isLoadingUpcomingMovies};
+        return {
+          movies: movies[2] ?? [],
+          loading: isLoading[2],
+          totalPage: totalPage[2],
+        };
       case 'popular':
-        return {movies: popularMovies ?? [], loading: isLoadingPopularMovies};
+        return {
+          movies: movies[3] ?? [],
+          loading: isLoading[3],
+          totalPage: totalPage[3],
+        };
       default:
-        return {movies: [], loading: false};
+        return {movies: [], loading: false, totalPage: 1};
     }
   };
 
   const getMoreMovies = (page: number, endpoint: string) => {
-    if (chooseData().loading || page > totalPage) return;
+    if (chooseData().loading || page > chooseData().totalPage) return;
     dispatch(
       fetchMovies({
         page,

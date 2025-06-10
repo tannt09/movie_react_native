@@ -17,15 +17,9 @@ import HorizontalMovies from '@/components/home/HorizontalMovies';
 const HomeScreen = () => {
   const {
     isLoadingDetail,
-    isLoadingNowPlayMovies,
-    isLoadingTopRatedMovies,
-    isLoadingUpcomingMovies,
-    isLoadingPopularMovies,
+    isLoading,
     movieDetail,
-    nowPlayMovies,
-    topRatedMovies,
-    upcomingMovies,
-    popularMovies,
+    movies,
     getNameGenres,
     handlePlayVideo,
     handleAddToMyList,
@@ -97,9 +91,9 @@ const HomeScreen = () => {
 
       {/* Now playing videos */}
       <HorizontalMovies
-        movies={nowPlayMovies ?? []}
+        movies={movies[0] ?? []}
         title={'Now playing'}
-        isLoading={isLoadingNowPlayMovies}
+        isLoading={isLoading[0]}
         onPress={() =>
           navigate('SeeAllScreen', {
             title: 'Now playing',
@@ -110,9 +104,9 @@ const HomeScreen = () => {
 
       {/* Top rate videos */}
       <HorizontalMovies
-        movies={topRatedMovies ?? []}
+        movies={movies[1] ?? []}
         title={'Top rate'}
-        isLoading={isLoadingTopRatedMovies}
+        isLoading={isLoading[1]}
         onPress={() =>
           navigate('SeeAllScreen', {title: 'Top rate', endpoint: 'top_rated'})
         }
@@ -120,9 +114,9 @@ const HomeScreen = () => {
 
       {/* Upcomming videos */}
       <HorizontalMovies
-        movies={upcomingMovies ?? []}
+        movies={movies[2] ?? []}
         title={'Upcoming'}
-        isLoading={isLoadingUpcomingMovies}
+        isLoading={isLoading[2]}
         onPress={() =>
           navigate('SeeAllScreen', {title: 'Upcoming', endpoint: 'upcoming'})
         }
@@ -130,9 +124,9 @@ const HomeScreen = () => {
 
       {/* Popular videos */}
       <HorizontalMovies
-        movies={popularMovies ?? []}
+        movies={movies[3] ?? []}
         title={'Popular'}
-        isLoading={isLoadingPopularMovies}
+        isLoading={isLoading[3]}
         onPress={() =>
           navigate('SeeAllScreen', {title: 'Popular', endpoint: 'popular'})
         }

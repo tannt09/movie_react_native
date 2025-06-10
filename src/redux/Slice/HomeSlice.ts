@@ -11,57 +11,29 @@ const delay = (ms: number) =>
 
 interface HomeState {
   movieDetail?: MovieDetailModel;
-  nowPlayMovies?: MovieDetailModel[];
-  topRatedMovies?: MovieDetailModel[];
-  upcomingMovies?: MovieDetailModel[];
-  popularMovies?: MovieDetailModel[];
+  movies: MovieDetailModel[][];
   isLoadingDetail: boolean;
-  isLoadingNowPlayMovies: boolean;
-  isLoadingTopRatedMovies: boolean;
-  isLoadingUpcomingMovies: boolean;
-  isLoadingPopularMovies: boolean;
+  isLoading: boolean[];
   error?: string;
-  totalPage: number;
+  totalPage: number[];
 }
 
 const initialState: HomeState = {
+  movies: Array(4)
+    .fill(null)
+    .map(() => []),
   isLoadingDetail: false,
-  isLoadingNowPlayMovies: false,
-  isLoadingTopRatedMovies: false,
-  isLoadingUpcomingMovies: false,
-  isLoadingPopularMovies: false,
-  totalPage: 1,
+  isLoading: Array(4).fill(false),
+  totalPage: Array(4).fill(1),
 };
 
 type EndpointType = 'now_playing' | 'top_rated' | 'upcoming' | 'popular';
 
-const movieKeyMap: Record<
-  EndpointType,
-  keyof Pick<
-    HomeState,
-    'nowPlayMovies' | 'topRatedMovies' | 'upcomingMovies' | 'popularMovies'
-  >
-> = {
-  now_playing: 'nowPlayMovies',
-  top_rated: 'topRatedMovies',
-  upcoming: 'upcomingMovies',
-  popular: 'popularMovies',
-};
-
-const loadingKeyMap: Record<
-  EndpointType,
-  keyof Pick<
-    HomeState,
-    | 'isLoadingNowPlayMovies'
-    | 'isLoadingTopRatedMovies'
-    | 'isLoadingUpcomingMovies'
-    | 'isLoadingPopularMovies'
-  >
-> = {
-  now_playing: 'isLoadingNowPlayMovies',
-  top_rated: 'isLoadingTopRatedMovies',
-  upcoming: 'isLoadingUpcomingMovies',
-  popular: 'isLoadingPopularMovies',
+const valueKeyMap: Record<EndpointType, number> = {
+  now_playing: 0,
+  top_rated: 1,
+  upcoming: 2,
+  popular: 3,
 };
 
 export const fetchMovieDetail = createAsyncThunk(
@@ -117,37 +89,36 @@ const homeSlice = createSlice({
       })
       .addCase(fetchMovies.pending, (state, action) => {
         const {endpoint} = action.meta.arg;
-        const loadingKey = loadingKeyMap[endpoint as EndpointType];
+        const valueKey = valueKeyMap[endpoint as EndpointType];
 
-        state[loadingKey] = true;
+        state.isLoading[valueKey] = true;
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         const {page, endpoint, handleLoadMore} = action.meta.arg;
         const isLoadMore = page > 1 ? true : false;
 
-        const movieKey = movieKeyMap[endpoint as EndpointType];
-        const loadingKey = loadingKeyMap[endpoint as EndpointType];
+        const valueKey = valueKeyMap[endpoint as EndpointType];
 
         if (action.payload) {
           if (handleLoadMore) {
             handleLoadMore();
           }
           if (isLoadMore) {
-            const movieList = state[movieKey] as MovieDetailModel[];
+            const movieList = state.movies[valueKey];
             movieList.push(...action.payload.results);
           } else {
-            state[movieKey] = action.payload.results;
+            state.movies[valueKey] = action.payload.results;
           }
-          state.totalPage = action.payload.total_pages;
+          state.totalPage[valueKey] = action.payload.total_pages;
         }
 
-        state[loadingKey] = false;
+        state.isLoading[valueKey] = false;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         const {endpoint} = action.meta.arg;
-        const loadingKey = loadingKeyMap[endpoint as EndpointType];
+        const valueKey = valueKeyMap[endpoint as EndpointType];
 
-        state[loadingKey] = false;
+        state.isLoading[valueKey] = false;
         state.error = action.error.toString();
       });
   },

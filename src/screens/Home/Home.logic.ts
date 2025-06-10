@@ -10,18 +10,9 @@ import {fetchTrailerVideo} from '@/redux/Slice/VideoSlice';
 import {addMoviesThunk} from '@/redux/Slice/MyListSlice';
 
 const useHomeLogic = () => {
-  const {
-    isLoadingDetail,
-    isLoadingNowPlayMovies,
-    isLoadingTopRatedMovies,
-    isLoadingUpcomingMovies,
-    isLoadingPopularMovies,
-    movieDetail,
-    nowPlayMovies,
-    topRatedMovies,
-    upcomingMovies,
-    popularMovies,
-  } = useSelector((state: RootState) => state.home);
+  const {isLoadingDetail, isLoading, movieDetail, movies} = useSelector(
+    (state: RootState) => state.home,
+  );
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -67,15 +58,9 @@ const useHomeLogic = () => {
 
   return {
     isLoadingDetail,
-    isLoadingNowPlayMovies,
-    isLoadingTopRatedMovies,
-    isLoadingUpcomingMovies,
-    isLoadingPopularMovies,
+    isLoading,
     movieDetail,
-    nowPlayMovies,
-    topRatedMovies,
-    upcomingMovies,
-    popularMovies,
+    movies,
     getNameGenres,
     handlePlayVideo,
     handleAddToMyList,
