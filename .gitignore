@@ -76,5 +76,5 @@ yarn-error.log
 yarn.lock
 
 # Environment files
-.env
-.env.*
+# .env
+# .env.*

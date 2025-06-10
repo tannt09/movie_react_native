@@ -28,6 +28,7 @@ const HomeScreen = () => {
     popularMovies,
     getNameGenres,
     handlePlayVideo,
+    handleAddToMyList,
   } = useHomeLogic();
 
   return (
@@ -76,12 +77,16 @@ const HomeScreen = () => {
             </>
           )}
           <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.playButton} onPress={handlePlayVideo}>
+            <TouchableOpacity
+              style={styles.playButton}
+              onPress={handlePlayVideo}>
               <Play width={20} height={20} />
               <View style={{width: 10}} />
               <Text style={styles.playButtonText}>Play</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.listButton}>
+            <TouchableOpacity
+              style={styles.listButton}
+              onPress={handleAddToMyList}>
               <Ionicons name={'add'} size={20} color="#fff" />
               <View style={{width: 10}} />
               <Text style={styles.playButtonText}>My List</Text>

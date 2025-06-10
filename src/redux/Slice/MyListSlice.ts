@@ -3,8 +3,9 @@ import {Alert} from 'react-native';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 // IMPORT
-import {getMyListApi} from '@/api/myList';
+import {addMoviesApi, getMyListApi} from '@/api/myList';
 import {MovieDetailModel} from '@/models/homeModels';
+import {AddItemMoviesModel} from '@/models/myListModels';
 
 interface MyListState {
   isLoading: boolean;
@@ -40,6 +41,24 @@ export const fetchMyList = createAsyncThunk(
   },
 );
 
+export const addMoviesThunk = createAsyncThunk(
+  'addMoviesToMyList',
+  async (data: {id: number; items: AddItemMoviesModel[]}, {dispatch}) => {
+    try {
+      const response = await addMoviesApi(data);
+
+      const results = response.results[0];
+      if (results.success) {
+        dispatch(fetchMyList({id: data.id, page: 1, handleLoadMore: () => {}}));
+      }
+
+      return response;
+    } catch (err) {
+      Alert.alert('Unable to add movies ', `${err}`);
+    }
+  },
+);
+
 const myListSlice = createSlice({
   name: 'myList',
   initialState,
@@ -67,6 +86,24 @@ const myListSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(fetchMyList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.toString();
+      })
+      .addCase(addMoviesThunk.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(addMoviesThunk.fulfilled, (state, action) => {
+        const results = action.payload?.results[0];
+        if (results && !results.success) {
+          state.error =
+            results.error && results.error.length > 0
+              ? results.error[0]
+              : undefined;
+        }
+
+        state.isLoading = false;
+      })
+      .addCase(addMoviesThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.toString();
       });

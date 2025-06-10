@@ -1,11 +1,11 @@
 // IMPORT
 import {MovieListResponseModel} from '@/models/homeModels';
-import api from '@/services/axiosConfig';
+import { defaultApi } from '@/services/axiosService';
 import {handleResponse} from '@/utils/handleResponse';
 
 export const getMovieDetailApi = async ({id}: {id: number}) => {
   try {
-    const response = await api.get(`/movie/${id}`, {
+    const response = await defaultApi.get(`/movie/${id}`, {
       params: {
         language: 'en-US',
       },
@@ -27,7 +27,7 @@ export const getMoviesApi = async ({
   endpoint: string;
 }): Promise<MovieListResponseModel> => {
   try {
-    const response = await api.get(`/movie/${endpoint}`, {
+    const response = await defaultApi.get(`/movie/${endpoint}`, {
       params: {
         language: 'en-US',
         page: page,

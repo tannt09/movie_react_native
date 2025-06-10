@@ -14,3 +14,22 @@ export interface MyListResponseModel {
   total_pages: number;
   total_results: number;
 }
+
+export interface AddItemMoviesModel {
+  media_type: string;
+  media_id: number;
+}
+
+export interface AddMovieResultModel {
+  media_id: number;
+  media_type: string;
+  error?: string[];
+  success: boolean;
+}
+
+export interface AddMoviesResponseModel {
+  success: boolean;
+  status_code: number;
+  status_message: string;
+  results: AddMovieResultModel[];
+}

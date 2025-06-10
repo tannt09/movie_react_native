@@ -1,6 +1,6 @@
 // IMPORT
-import api from '@/services/axiosConfig';
 import {MovieListResponseModel} from '@/models/homeModels';
+import { defaultApi } from '@/services/axiosService';
 import {handleResponse} from '@/utils/handleResponse';
 
 export const getSearchMoviesApi = async ({
@@ -11,7 +11,7 @@ export const getSearchMoviesApi = async ({
   searchText: string;
 }): Promise<MovieListResponseModel> => {
   try {
-    const response = await api.get(`/search/movie`, {
+    const response = await defaultApi.get(`/search/movie`, {
       params: {
         language: 'en-US',
         include_adult: false,

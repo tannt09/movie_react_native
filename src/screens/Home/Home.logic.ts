@@ -7,6 +7,7 @@ import {AppDispatch, RootState} from '@redux/store';
 import {fetchMovieDetail, fetchMovies} from '@redux/Slice/HomeSlice';
 import {navigate} from '@/navigation/navigationService';
 import {fetchTrailerVideo} from '@/redux/Slice/VideoSlice';
+import {addMoviesThunk} from '@/redux/Slice/MyListSlice';
 
 const useHomeLogic = () => {
   const {
@@ -51,7 +52,17 @@ const useHomeLogic = () => {
   };
 
   const handlePlayVideo = () => {
-    navigate('WatchTrailersScreen')
+    navigate('WatchTrailersScreen');
+  };
+
+  const handleAddToMyList = () => {
+    if (!movieDetail) return;
+    dispatch(
+      addMoviesThunk({
+        id: 8535578,
+        items: [{media_id: movieDetail.id, media_type: 'movie'}],
+      }),
+    );
   };
 
   return {
@@ -67,6 +78,7 @@ const useHomeLogic = () => {
     popularMovies,
     getNameGenres,
     handlePlayVideo,
+    handleAddToMyList,
   };
 };
 

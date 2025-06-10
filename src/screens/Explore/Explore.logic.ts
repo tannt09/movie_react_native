@@ -30,6 +30,7 @@ const useExploreLogic = () => {
   };
 
   const handleLoadMore = () => {
+    if (exploreMovies.length === 0) return;
     getSearchMovies(page, searchText);
   };
 
