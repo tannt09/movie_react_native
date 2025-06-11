@@ -12,4 +12,5 @@ export type RootStackParamList = {
     endpoint: string;
   };
   WatchTrailersScreen: undefined;
+  PaymentScreen: undefined;
 };

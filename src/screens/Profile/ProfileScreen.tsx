@@ -7,6 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 // IMPORT
 import Logo from '@assets/icons/ic_logo.svg';
 import Premium from '@assets/icons/ic_ premium.svg';
+import {navigate} from '@/navigation/navigationService';
 
 const ProfileScreen = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -23,7 +24,9 @@ const ProfileScreen = () => {
       </View>
 
       {/* Premium */}
-      <View style={{flex: 1}}>
+      <TouchableOpacity
+        style={{flex: 1}}
+        onPress={() => navigate('PaymentScreen')}>
         <View style={styles.premiumBox}>
           <Premium width={50} height={50} />
           <View style={styles.premiumContent}>
@@ -35,7 +38,7 @@ const ProfileScreen = () => {
           </View>
           <Feather name={'chevron-right'} size={26} color="#000" />
         </View>
-      </View>
+      </TouchableOpacity>
 
       <View style={styles.menu}>
         {[
