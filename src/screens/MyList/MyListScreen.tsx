@@ -14,6 +14,7 @@ import CustomHeader from '@/components/common/CustomHeader';
 import {MovieDetailModel} from '@/models/homeModels';
 import ItemMovie from '@/components/common/ItemMovie';
 import useMyListLogic from './MyList.logic';
+import {COLORS} from '@/constants/colors';
 
 const {width} = Dimensions.get('window');
 const ITEM_WIDTH = (width - 50) / 2;
@@ -25,7 +26,7 @@ const MyListScreen = () => {
     if (!isLoading) return null;
     return (
       <View style={{paddingVertical: 20}}>
-        <ActivityIndicator size="small" color="#999" />
+        <ActivityIndicator size="small" color={COLORS.GRAY} />
       </View>
     );
   };

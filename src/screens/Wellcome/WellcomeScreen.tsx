@@ -119,6 +119,7 @@ const styles = ScaledSheet.create({
     fontSize: 20,
     opacity: 0.8,
     marginTop: 10,
+    fontFamily: 'KoHo-SemiBold',
   },
   textStyle: {
     color: 'white',
@@ -127,6 +128,7 @@ const styles = ScaledSheet.create({
     opacity: 0.8,
     marginTop: 20,
     marginHorizontal: 10,
+    fontFamily: 'KoHo-Medium',
   },
   outlineButton: {
     borderWidth: 1,
@@ -140,6 +142,7 @@ const styles = ScaledSheet.create({
     color: COLORS.RED,
     fontSize: 16,
     fontWeight: '600',
+    fontFamily: 'KoHo-Bold',
   },
   solidButton: {
     backgroundColor: COLORS.RED,
@@ -150,9 +153,10 @@ const styles = ScaledSheet.create({
     width: '80%',
   },
   solidText: {
-    color: '#FFFFFF',
+    color: 'white',
     fontSize: 16,
     fontWeight: '600',
+    fontFamily: 'KoHo-Bold',
   },
   dot: {
     width: 6,

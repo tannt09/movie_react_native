@@ -1,13 +1,16 @@
 // LIB
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
 import Premium from '@assets/icons/ic_ premium.svg';
+import {navigate} from '@/navigation/navigationService';
 
 const PremiumCard = ({price, period}: {price: string; period: string}) => {
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => navigate('PaymentMethodScreen')}>
       <View style={{alignItems: 'center'}}>
         <Premium width={50} height={50} />
       </View>
@@ -27,7 +30,7 @@ const PremiumCard = ({price, period}: {price: string; period: string}) => {
           <Text style={styles.featureText}>{item}</Text>
         </View>
       ))}
-    </View>
+    </TouchableOpacity>
   );
 };
 

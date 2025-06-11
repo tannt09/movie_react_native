@@ -16,6 +16,7 @@ import {RootStackParamList} from '@/models/navigationModels';
 import {MovieDetailModel} from '@/models/homeModels';
 import useSeeAllLogic from './SeeAll.logic';
 import CustomHeader from '@/components/common/CustomHeader';
+import {COLORS} from '@/constants/colors';
 
 type SeeAllRouteProp = RouteProp<RootStackParamList, 'SeeAllScreen'>;
 
@@ -32,7 +33,7 @@ const SeeAllScreen = () => {
     if (!chooseData().loading) return null;
     return (
       <View style={{paddingVertical: 20}}>
-        <ActivityIndicator size="small" color="#999" />
+        <ActivityIndicator size="small" color={COLORS.GRAY} />
       </View>
     );
   };

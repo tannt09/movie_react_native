@@ -70,7 +70,7 @@ const LoginScreen = () => {
           <FontAwesome6
             name={showPassword ? 'eye-off' : 'eye'}
             size={20}
-            color="#999"
+            color={COLORS.GRAY}
           />
         </TouchableOpacity>
       </View>

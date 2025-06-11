@@ -8,6 +8,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Logo from '@assets/icons/ic_logo.svg';
 import Premium from '@assets/icons/ic_ premium.svg';
 import {navigate} from '@/navigation/navigationService';
+import {COLORS} from '@/constants/colors';
 
 const ProfileScreen = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -102,7 +103,7 @@ const styles = ScaledSheet.create({
   header: {flex: 1, marginBottom: 16, marginTop: 10},
   userInfo: {flex: 1, alignItems: 'center', marginTop: 20},
   name: {fontSize: 22, fontFamily: 'KoHo-SemiBold'},
-  email: {fontSize: 18, color: '#666', fontFamily: 'KoHo-Medium'},
+  email: {fontSize: 18, color: COLORS.GRAY, fontFamily: 'KoHo-Medium'},
   premiumBox: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -119,7 +120,7 @@ const styles = ScaledSheet.create({
   premiumDesc: {
     marginTop: 4,
     fontSize: 16,
-    color: '#666',
+    color: COLORS.GRAY,
     fontFamily: 'KoHo-Medium',
   },
   menu: {marginTop: 8},
@@ -136,7 +137,7 @@ const styles = ScaledSheet.create({
   },
   row: {flexDirection: 'row', alignItems: 'center'},
   menuText: {marginLeft: 12, fontSize: 18, fontFamily: 'KoHo-SemiBold'},
-  menuValue: {color: '#999'},
+  menuValue: {color: COLORS.GRAY},
 });
 
 export default ProfileScreen;
