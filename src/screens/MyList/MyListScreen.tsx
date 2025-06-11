@@ -1,5 +1,5 @@
 // LIB
-import {useCallback, useEffect} from 'react';
+import {useCallback} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -7,12 +7,9 @@ import {
   SafeAreaView,
   View,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
-import {AppDispatch, RootState} from '@/redux/store';
-import {fetchMyList} from '@/redux/Slice/MyListSlice';
 import CustomHeader from '@/components/common/CustomHeader';
 import {MovieDetailModel} from '@/models/homeModels';
 import ItemMovie from '@/components/common/ItemMovie';
