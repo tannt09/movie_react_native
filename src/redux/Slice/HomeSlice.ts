@@ -1,6 +1,6 @@
 // LIB
 import {Alert} from 'react-native';
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // IMPORT
 import {getMovieDetailApi, getMoviesApi} from '@/api/home';
@@ -15,6 +15,7 @@ interface HomeState {
   isLoadingDetail: boolean;
   isLoading: boolean[];
   error?: string;
+  page: number[];
   totalPage: number[];
 }
 
@@ -24,6 +25,7 @@ const initialState: HomeState = {
     .map(() => []),
   isLoadingDetail: false,
   isLoading: Array(4).fill(false),
+  page: Array(4).fill(1),
   totalPage: Array(4).fill(1),
 };
 
@@ -51,17 +53,11 @@ export const fetchMovieDetail = createAsyncThunk(
 
 export const fetchMovies = createAsyncThunk(
   'getMovies',
-  async ({
-    page,
-    endpoint,
-    handleLoadMore,
-  }: {
-    page: number;
-    endpoint: string;
-    handleLoadMore?: () => void;
-  }) => {
+  async ({page, endpoint}: {page: number; endpoint: string}, {dispatch}) => {
     try {
       const movies = await getMoviesApi({page, endpoint});
+
+      dispatch(increasePage(valueKeyMap[endpoint as EndpointType]));
 
       return movies;
     } catch (err) {
@@ -73,7 +69,11 @@ export const fetchMovies = createAsyncThunk(
 const homeSlice = createSlice({
   name: 'home',
   initialState,
-  reducers: {},
+  reducers: {
+    increasePage: (state, action: PayloadAction<number>) => {
+      state.page[action.payload] = state.page[action.payload] + 1;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchMovieDetail.pending, state => {
@@ -94,15 +94,12 @@ const homeSlice = createSlice({
         state.isLoading[valueKey] = true;
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
-        const {page, endpoint, handleLoadMore} = action.meta.arg;
+        const {page, endpoint} = action.meta.arg;
         const isLoadMore = page > 1 ? true : false;
 
         const valueKey = valueKeyMap[endpoint as EndpointType];
 
         if (action.payload) {
-          if (handleLoadMore) {
-            handleLoadMore();
-          }
           if (isLoadMore) {
             const movieList = state.movies[valueKey];
             movieList.push(...action.payload.results);
@@ -124,4 +121,5 @@ const homeSlice = createSlice({
   },
 });
 
+export const {increasePage} = homeSlice.actions;
 export default homeSlice.reducer;

@@ -1,4 +1,12 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Description
+
+This is a watch movies app use React Native. Use api from https://developer.themoviedb.org/reference/movie-watch-providers .
+
+# Note
+
+You can register new account and login to get API Read Access Token. When you want to work with api request access token like create list, add new item to list, delete item from list,... then you need generate a fresh access token from instruction https://developer.themoviedb.org/v4/docs/authentication-user.
+
+If you work with list then you need use base url https://api.themoviedb.org/4 insteal of https://api.themoviedb.org/3 .
 
 # Getting Started
 
