@@ -16,34 +16,13 @@ import {fetchMyList} from '@/redux/Slice/MyListSlice';
 import CustomHeader from '@/components/common/CustomHeader';
 import {MovieDetailModel} from '@/models/homeModels';
 import ItemMovie from '@/components/common/ItemMovie';
+import useMyListLogic from './MyList.logic';
 
 const {width} = Dimensions.get('window');
 const ITEM_WIDTH = (width - 50) / 2;
 
 const MyListScreen = () => {
-  const {movies, isLoading, totalPage, page} = useSelector(
-    (state: RootState) => state.myList,
-  );
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  const getMyList = (id: number) => {
-    if (isLoading || page > totalPage) return;
-    dispatch(
-      fetchMyList({
-        id: id,
-        page: page,
-      }),
-    );
-  };
-
-  const handleLoadMore = () => {
-    getMyList(8535578);
-  };
-
-  useEffect(() => {
-    getMyList(8535578);
-  }, []);
+  const {movies, isLoading, handleLoadMore} = useMyListLogic();
 
   const renderFooter = () => {
     if (!isLoading) return null;
