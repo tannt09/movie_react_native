@@ -14,4 +14,5 @@ export type RootStackParamList = {
   WatchTrailersScreen: undefined;
   PaymentScreen: undefined;
   PaymentMethodScreen: undefined;
+  ReviewSumaryScreen: undefined;
 };

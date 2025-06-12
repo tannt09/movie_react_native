@@ -15,6 +15,7 @@ import SeeAllScreen from '@/screens/SeeAll/SeeAllScreen';
 import WatchTrailersScreen from '@/screens/WatchTrailers/WatchTrailersScreen';
 import PaymentScreen from '@/screens/Payment/PaymentScreen';
 import PaymentMethodScreen from '@/screens/Payment/PaymentMethodScreen';
+import ReviewSumaryScreen from '@/screens/Payment/ReviewSumaryScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ const Navigate = () => {
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       <Stack.Screen name="SeeAllScreen" component={SeeAllScreen} />
       <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
+      <Stack.Screen name="ReviewSumaryScreen" component={ReviewSumaryScreen} />
       <Stack.Screen
         name="PaymentMethodScreen"
         component={PaymentMethodScreen}

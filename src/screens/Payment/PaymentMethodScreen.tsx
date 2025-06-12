@@ -10,6 +10,7 @@ import Paypal from '@assets/icons/ic_paypal.svg';
 import Google from '@assets/icons/google.svg';
 import ApplePay from '@assets/icons/ic_apple_pay.svg';
 import {COLORS} from '@/constants/colors';
+import {navigate} from '@/navigation/navigationService';
 
 const paymentOptions = [
   {
@@ -69,7 +70,9 @@ const PaymentMethodScreen = () => {
       <TouchableOpacity style={styles.addCardBtn}>
         <Text style={[styles.buttonText, {color: 'red'}]}>Add New Card</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.solidButton} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.solidButton}
+        onPress={() => navigate('ReviewSumaryScreen')}>
         <Text style={[styles.buttonText, {color: 'white'}]}>Continue</Text>
       </TouchableOpacity>
     </View>
