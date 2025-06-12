@@ -11,6 +11,7 @@ import Google from '@assets/icons/google.svg';
 import ApplePay from '@assets/icons/ic_apple_pay.svg';
 import {COLORS} from '@/constants/colors';
 import {navigate} from '@/navigation/navigationService';
+import CustomButton from '@/components/common/CustomButton';
 
 const paymentOptions = [
   {
@@ -67,14 +68,17 @@ const PaymentMethodScreen = () => {
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity style={styles.addCardBtn}>
-        <Text style={[styles.buttonText, {color: 'red'}]}>Add New Card</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.solidButton}
-        onPress={() => navigate('ReviewSumaryScreen')}>
-        <Text style={[styles.buttonText, {color: 'white'}]}>Continue</Text>
-      </TouchableOpacity>
+      <CustomButton
+        content="Add New Card"
+        onPress={() => {}}
+        backgroundColor="#ffeef0"
+        textColor="red"
+      />
+      <CustomButton
+        content="Continue"
+        styleButton={{position: 'absolute', bottom: 20, right: 10, left: 10}}
+        onPress={() => navigate('ReviewSumaryScreen')}
+      />
     </View>
   );
 };
@@ -114,28 +118,6 @@ const styles = ScaledSheet.create({
     borderRadius: 10,
     borderWidth: 6,
     borderColor: 'red',
-  },
-  addCardBtn: {
-    backgroundColor: '#ffeef0',
-    borderRadius: 30,
-    paddingVertical: 12,
-    alignItems: 'center',
-    marginTop: 30,
-  },
-  buttonText: {
-    fontWeight: '600',
-    fontSize: 18,
-    fontFamily: 'KoHo-Bold',
-  },
-  solidButton: {
-    backgroundColor: COLORS.RED,
-    borderRadius: 30,
-    paddingVertical: 12,
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 20,
-    right: 10,
-    left: 10,
   },
 });
 

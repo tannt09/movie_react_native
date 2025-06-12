@@ -7,6 +7,7 @@ import CustomHeader from '@/components/common/CustomHeader';
 import PremiumCard from '@/components/payment/PremiumCard';
 import Paypal from '@assets/icons/ic_paypal.svg';
 import {COLORS} from '@/constants/colors';
+import CustomButton from '@/components/common/CustomButton';
 
 const ReviewSumaryScreen = () => {
   return (
@@ -46,9 +47,16 @@ const ReviewSumaryScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.solidButton}>
-        <Text style={[styles.buttonText, {color: 'white'}]}>Continue</Text>
-      </TouchableOpacity>
+      <CustomButton
+        content={'Continue'}
+        styleButton={{
+          position: 'absolute',
+          bottom: 20,
+          right: 10,
+          left: 10,
+        }}
+        onPress={() => {}}
+      />
     </View>
   );
 };
@@ -117,21 +125,6 @@ const styles = ScaledSheet.create({
     color: 'red',
     fontSize: 18,
     ontFamily: 'KoHo-SemiBold',
-  },
-  solidButton: {
-    backgroundColor: COLORS.RED,
-    borderRadius: 30,
-    paddingVertical: 12,
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 20,
-    right: 10,
-    left: 10,
-  },
-  buttonText: {
-    fontWeight: '600',
-    fontSize: 18,
-    fontFamily: 'KoHo-Bold',
   },
 });
 
