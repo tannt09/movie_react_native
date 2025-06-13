@@ -1,10 +1,10 @@
 // LIB
+import React from 'react';
 import {Text, TouchableOpacity, ViewStyle} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
 import {COLORS} from '@/constants/colors';
-import React from 'react';
 
 interface CustomBottomProps {
   content: string;

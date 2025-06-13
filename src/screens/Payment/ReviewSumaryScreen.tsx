@@ -6,8 +6,8 @@ import {ScaledSheet} from 'react-native-size-matters';
 import CustomHeader from '@/components/common/CustomHeader';
 import PremiumCard from '@/components/payment/PremiumCard';
 import Paypal from '@assets/icons/ic_paypal.svg';
-import {COLORS} from '@/constants/colors';
 import CustomButton from '@/components/common/CustomButton';
+import {navigate} from '@/navigation/navigationService';
 
 const ReviewSumaryScreen = () => {
   return (
@@ -55,7 +55,7 @@ const ReviewSumaryScreen = () => {
           right: 10,
           left: 10,
         }}
-        onPress={() => {}}
+        onPress={() => navigate('PaymentCard')}
       />
     </View>
   );

@@ -7,12 +7,13 @@ export type RootStackParamList = {
   MyListScreen: undefined;
   DownloadScreen: undefined;
   ProfileScreen: undefined;
-  SeeAllScreen: {
-    title: string;
-    endpoint: string;
-  };
   WatchTrailersScreen: undefined;
   PaymentScreen: undefined;
   PaymentMethodScreen: undefined;
   ReviewSumaryScreen: undefined;
+  PaymentCard: undefined;
+  SeeAllScreen: {
+    title: string;
+    endpoint: string;
+  };
 };
