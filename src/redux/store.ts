@@ -6,6 +6,7 @@ import homeReducer from './Slice/HomeSlice';
 import videoReducer from './Slice/VideoSlice';
 import exploreReducer from './Slice/ExploreSlice';
 import myListReducer from './Slice/MyListSlice';
+import movieDetailReducer from './Slice/MovieDetailSlice';
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     video: videoReducer,
     explore: exploreReducer,
     myList: myListReducer,
+    movieDetail: movieDetailReducer,
   },
 });
 
