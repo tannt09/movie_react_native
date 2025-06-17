@@ -7,6 +7,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {COLORS} from '@/constants/colors';
 import {MovieDetailModel} from '@/models/homeModels';
 import ItemMovie from '../common/ItemMovie';
+import {navigate} from '@/navigation/navigationService';
 
 interface HorizontalMoviesProp {
   movies: MovieDetailModel[];
@@ -55,9 +56,12 @@ const HorizontalMovies: React.FC<HorizontalMoviesProp> = ({
           showsHorizontalScrollIndicator={false}
           style={{marginHorizontal: 20}}>
           {movies.map((movie, index) => {
+            const handlePressItem = () => {
+              navigate('MovieDetailsScreen', {id: movie.id});
+            };
             return (
               <View key={index} style={{marginEnd: 16}}>
-                <ItemMovie movie={movie} />
+                <ItemMovie movie={movie} onPress={handlePressItem} />
               </View>
             );
           })}

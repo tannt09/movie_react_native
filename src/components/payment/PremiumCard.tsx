@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
 
 // IMPORT
-import Premium from '@assets/icons/ic_ premium.svg';
+import Premium from '@assets/icons/ic_premium.svg';
 import {navigate} from '@/navigation/navigationService';
 
 const PremiumCard = ({price, period}: {price: string; period: string}) => {

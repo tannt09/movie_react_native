@@ -6,7 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 // IMPORT
 import Logo from '@assets/icons/ic_logo.svg';
-import Premium from '@assets/icons/ic_ premium.svg';
+import Premium from '@assets/icons/ic_premium.svg';
 import {navigate} from '@/navigation/navigationService';
 import {COLORS} from '@/constants/colors';
 

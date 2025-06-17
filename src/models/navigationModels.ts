@@ -12,6 +12,7 @@ export type RootStackParamList = {
   PaymentMethodScreen: undefined;
   ReviewSumaryScreen: undefined;
   PaymentCard: undefined;
+  MovieDetailsScreen: {id: number};
   SeeAllScreen: {
     title: string;
     endpoint: string;

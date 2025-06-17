@@ -1,22 +1,23 @@
 // LIB
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters';
+import FastImage from 'react-native-fast-image';
 
 // IMPORT
 import {COLORS} from '@/constants/colors';
 import {MovieDetailModel} from '@/models/homeModels';
-import FastImage from 'react-native-fast-image';
 
 interface ItemMovieProp {
   movie: MovieDetailModel;
   width?: number;
+  onPress?: () => void;
 }
 
 const ItemMovie: React.FC<ItemMovieProp> = React.memo(
-  ({movie, width = 150}) => {
+  ({movie, width = 150, onPress = () => {}}) => {
     return (
-      <View style={[styles.movieCard, {width}]}>
+      <TouchableOpacity style={[styles.movieCard, {width}]} onPress={onPress}>
         <FastImage
           source={{
             uri: `http://image.tmdb.org/t/p/w500${movie.poster_path}`,
@@ -28,7 +29,7 @@ const ItemMovie: React.FC<ItemMovieProp> = React.memo(
         <View style={styles.ratingBadge}>
           <Text style={styles.ratingText}>{movie.vote_average.toFixed(1)}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   },
 );

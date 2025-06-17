@@ -18,6 +18,7 @@ import PaymentMethodScreen from '@/screens/Payment/PaymentMethodScreen';
 import ReviewSumaryScreen from '@/screens/Payment/ReviewSumaryScreen';
 import PaymentCard from '@/screens/Payment/PaymentCard';
 import {StripeProvider} from '@stripe/stripe-react-native';
+import MovieDetailsScreen from '@/screens/MovieDetails/MovieDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,10 @@ const Navigate = () => {
         <Stack.Screen name="SeeAllScreen" component={SeeAllScreen} />
         <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
         <Stack.Screen name="PaymentCard" component={PaymentCard} />
+        <Stack.Screen
+          name="MovieDetailsScreen"
+          component={MovieDetailsScreen}
+        />
         <Stack.Screen
           name="ReviewSumaryScreen"
           component={ReviewSumaryScreen}
