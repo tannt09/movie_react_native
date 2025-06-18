@@ -25,6 +25,10 @@ import StarIcon from '@assets/icons/ic_star.svg';
 import PlayIcon from '@assets/icons/ic_play.svg';
 import DownloadIcon from '@assets/icons/ic_red_download.svg';
 import {COLORS} from '@/constants/colors';
+import CustomTabView from '@/components/common/CustomTabView';
+import {fetchTrailerVideo} from '@/redux/Slice/VideoSlice';
+import TrailerScene from './TrailersScene';
+import FastImage from 'react-native-fast-image';
 
 type MovieDetailsRouteProp = RouteProp<
   RootStackParamList,
@@ -33,6 +37,12 @@ type MovieDetailsRouteProp = RouteProp<
 
 const {width} = Dimensions.get('window');
 const WIDTH = (width - 42) / 2;
+
+const routes = [
+  {key: 'first', title: 'Trailer'},
+  {key: 'second', title: 'Similar movies'},
+  {key: 'third', title: 'Comments'},
+];
 
 const MovieDetailsScreen = () => {
   const route = useRoute<MovieDetailsRouteProp>();
@@ -43,21 +53,42 @@ const MovieDetailsScreen = () => {
   const {movieDetail, isLoading} = useSelector(
     (state: RootState) => state.movieDetail,
   );
+  const trailer = useSelector((state: RootState) => state.video);
+
+  const renderScene = ({
+    route,
+  }: {
+    route: {
+      key: string;
+    };
+  }) => {
+    switch (route.key) {
+      case 'first':
+        return TrailerScene(trailer);
+      case 'second':
+        return <Text>Similar movies</Text>;
+      case 'third':
+        return <Text>Comments</Text>;
+      default:
+        return null;
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchMovieDetail(id));
+    dispatch(fetchTrailerVideo({id}));
   }, []);
 
   return (
     <ScrollView style={styles.container}>
       {/* Poster Image */}
       <View style={styles.posterContainer}>
-        <Image
+        <FastImage
           source={{
             uri: `http://image.tmdb.org/t/p/w500${movieDetail?.poster_path}`,
           }}
           style={styles.poster}
-          resizeMode={'cover'}
+          resizeMode={FastImage.resizeMode.cover}
         />
         <TouchableOpacity style={styles.backIcon} onPress={goBack}>
           <Icon name="chevron-back" size={24} color="#fff" />
@@ -115,22 +146,7 @@ const MovieDetailsScreen = () => {
         </Text>
         <Text style={styles.description}>{movieDetail?.overview ?? ''}</Text>
 
-        <View style={styles.tabs}>
-          <Text style={[styles.tabText, styles.activeTab]}>Trailer</Text>
-          <Text style={styles.tabText}>Similar movies</Text>
-          <Text style={styles.tabText}>Comments</Text>
-        </View>
-
-        {/* Trailer Preview */}
-        <View style={styles.trailerBox}>
-          <Image
-            source={{
-              uri: 'https://cdn.vox-cdn.com/thumbor/_nVtKN1C0hWLO8ZbImIOGJ_RxqY=/0x0:1280x720/1400x1400/filters:focal(640x360:641x361)/cdn.vox-cdn.com/uploads/chorus_asset/file/23708783/sonic.jpg',
-            }}
-            style={styles.trailerImage}
-          />
-          <Text style={styles.trailerText}>Let’s GOOOO!!!</Text>
-        </View>
+        <CustomTabView renderScene={renderScene} routes={routes} height={364} />
       </View>
     </ScrollView>
   );
@@ -177,17 +193,12 @@ const styles = ScaledSheet.create({
     paddingVertical: 6,
     borderRadius: 25,
   },
-  description: {color: COLORS.DARK_GRAY, marginBottom: 12, fontFamily: 'KoHo-Medium', fontSize: 16},
-  tabs: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+  description: {
+    color: COLORS.DARK_GRAY,
     marginBottom: 12,
+    fontFamily: 'KoHo-Medium',
+    fontSize: 16,
   },
-  tabText: {color: '#888', fontWeight: '600'},
-  activeTab: {color: 'red', textDecorationLine: 'underline'},
-  trailerBox: {marginTop: 10},
-  trailerImage: {width: '100%', height: 180, borderRadius: 12},
-  trailerText: {marginTop: 6, fontWeight: '600', fontSize: 16},
 });
 
 export default MovieDetailsScreen;

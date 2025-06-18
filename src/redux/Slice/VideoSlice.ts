@@ -6,7 +6,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {getTrailerVideoApi} from '@/api/video';
 import {VideoModel} from '@/models/videoModels';
 
-interface VideoState {
+export interface VideoState {
   isLoading: boolean;
   videos: VideoModel[];
   error?: string;
