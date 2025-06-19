@@ -31,7 +31,7 @@ const CustomTabView: React.FC<CustomTabViewProp> = ({
           const opacity = props.position.interpolate({
             inputRange,
             outputRange: inputRange.map((inputIndex: number) =>
-              inputIndex === i ? 1 : 0.4,
+              inputIndex === i ? 1 : 0.5,
             ),
           });
 
